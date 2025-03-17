@@ -47,7 +47,7 @@ int	switch_fds_identifier(
 	if (con)
 	{
 		if (pipe_data[index])
-			close(pipe_data[index_2]);
+			safe_close(pipe_data[index_2]);
 		pipe_data[index] = 1;
 	}
 	else

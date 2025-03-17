@@ -95,6 +95,6 @@ void	cleanup_and_exit_shell(t_env *env, int status)
  */
 void	close_pipe_ends(int fd1, int fd2)
 {
-	close(fd1);
-	close(fd2);
+	safe_close(fd1);
+	safe_close(fd2);
 }

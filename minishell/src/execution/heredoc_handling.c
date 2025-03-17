@@ -120,13 +120,13 @@ int	exec_here_doc(char *limiter, int *pipe_data, t_env *env)
 	if (!pid)
 	{
 		signal(SIGINT, quite_heredoc);
-		close(_out_fd_[0]);
+		safe_close(_out_fd_[0]);
 		read_and_write(_out_fd_[1], limiter, env,
 			is_there_any_quotes(limiter));
 		exit(1);
 	}
 	waitpid(pid, &status, 0);
-	close(_out_fd_[1]);
+	safe_close(_out_fd_[1]);
 	pipe_data[1] = _out_fd_[0];
 	pipe_data[9] = (WEXITSTATUS(status)) - 1;
 	if (pipe_data[9] < 0)

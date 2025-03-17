@@ -49,7 +49,7 @@ int	simple_child_for_builtins(char **cmd, int *_fd, t_env *env, int *pipe_data)
 		if (pipe_data[0] > 1)
 			dup2(fd_[1], 1);
 		else
-			close(_fd[0]);
+			safe_close(_fd[0]);
 		close_pipe_ends(fd_[0], fd_[1]);
 		dup2(1, _out_fd_[1]);
 		status = execute_builtin_command_in_child(cmd, env, _out_fd_, pipe_data);
@@ -59,7 +59,7 @@ int	simple_child_for_builtins(char **cmd, int *_fd, t_env *env, int *pipe_data)
 	if (pipe_data[0] > 1)
 		_fd[0] = fd_[0];
 	else
-		close(fd_[0]);
+		safe_close(fd_[0]);
 	return (1);
 }
 
@@ -102,14 +102,14 @@ int	execute_child_with_redirections(char **cmd, int *_fd, t_env *env, int *pipe_
 		exec_builtin_and_exit(cmd, env, _out_fd, pipe_data);
 	if (pipe_data[8] && pipe_data[7])
 	{
-		close(_out_fd[1]);
+		safe_close(_out_fd[1]);
 		pipe_data[7] = 0;
 	}
 	if (!pipe_data[6] && !pipe_data[7])
 		pipe_data[8] = 0;
 	if (pipe_data[0] > 1 && (!pipe_data[8] || !pipe_data[7]))
 	{
-		close(_out_fd[1]);
+		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
 	return (1);

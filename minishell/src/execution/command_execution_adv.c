@@ -51,7 +51,7 @@ int	execute_command_basic(char **cmd, int *_fd, char **env, int *pipe_data)
 		if (pipe_data[0] > 1)
 			dup2(fd_[1], 1);
 		else
-			close(_fd[0]);
+			safe_close(_fd[0]);
 		close_pipe_ends(fd_[0], fd_[1]);
 		execve(cmd[0], cmd, env);
 		(ft_putendl_fd(strerror(errno), 2), exit(127));
@@ -60,7 +60,7 @@ int	execute_command_basic(char **cmd, int *_fd, char **env, int *pipe_data)
 	if (pipe_data[0] > 1)
 		_fd[0] = fd_[0];
 	else
-		close(fd_[0]);
+		safe_close(fd_[0]);
 	return (1);
 }
 

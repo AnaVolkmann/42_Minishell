@@ -91,3 +91,11 @@ void	s_strcopy(char *s_1, char *s_2, int st, int en)
 		s_1[a++] = s_2[st++];
 	s_1[a] = '\0';
 }
+
+void	safe_close(int fd)
+{
+	if (fd >= 0)
+		close(fd);
+	else
+		return ;
+}

@@ -126,11 +126,11 @@ int	execute_ast_node(t_ast_node *head, int *pipe_data, t_env *env)
 		status = prepare_and_execute_command(head->args, _fd, pipe_data, env);
 	status = wait_for_children(status, pipe_data);
 	if (pipe_data[6])
-		close(pipe_data[1]);
+		safe_close(pipe_data[1]);
 	if (pipe_data[7])
-		close(pipe_data[2]);
+		safe_close(pipe_data[2]);
 	if (_fd[0] != -1 || _fd[1] != -1)
-		(close(_fd[0]), close(_fd[1]));
+		(safe_close(_fd[0]), safe_close(_fd[1]));
 	return (g_signal = 0, status);
 }
 

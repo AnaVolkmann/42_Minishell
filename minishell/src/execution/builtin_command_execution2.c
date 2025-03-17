@@ -45,7 +45,7 @@ int	execute_builtin_with_piping(char **_cmd_, int *_fd, t_env *env, int *pipe_da
 	status = execute_builtin_command_in_child(_cmd_, env, _out_fd, pipe_data);
 	if (pipe_data[0] > 1)
 	{
-		close(_out_fd[1]);
+		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
 	return (status);
@@ -73,14 +73,14 @@ int	execute_builtin_with_simple_piping(
 	status = execute_builtin_command_in_child(_cmd_, env, _out_fd, pipe_data);
 	if (pipe_data[8] && pipe_data[7])
 	{
-		close(_out_fd[1]);
+		safe_close(_out_fd[1]);
 		pipe_data[7] = 0;
 	}
 	if (!pipe_data[6] && !pipe_data[7])
 		pipe_data[8] = 0;
 	if (pipe_data[0] > 1 && (!pipe_data[8] || !pipe_data[7]))
 	{
-		close(_out_fd[1]);
+		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
 	return (status);

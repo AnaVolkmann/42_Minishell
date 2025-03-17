@@ -23,12 +23,12 @@ void	child_fds_managment(int *pipe_data, int *_fd, int *fd_)
 	if (pipe_data[8] && pipe_data[6])
 	{
 		dup2(pipe_data[1], 0);
-		close(pipe_data[1]);
+		safe_close(pipe_data[1]);
 	}
 	if (pipe_data[8] && pipe_data[7])
 	{
 		dup2(pipe_data[2], 1);
-		close(pipe_data[2]);
+		safe_close(pipe_data[2]);
 	}
 	if (pipe_data[0] && pipe_data[0] <= pipe_data[5]
 		&& (!pipe_data[8] || !pipe_data[6]))
@@ -36,9 +36,9 @@ void	child_fds_managment(int *pipe_data, int *_fd, int *fd_)
 	if (pipe_data[0] > 1 && (!pipe_data[8] || !pipe_data[7]))
 		dup2(fd_[1], 1);
 	else
-		close(fd_[0]);
-	close(fd_[0]);
-	close(fd_[1]);
+		safe_close(fd_[0]);
+	safe_close(fd_[0]);
+	safe_close(fd_[1]);
 }
 
 /**
@@ -51,20 +51,20 @@ void	parent_fds_managment(int *pipe_data, int *_fd, int *fd_)
 {
 	if (pipe_data[8] && pipe_data[6])
 	{
-		close(pipe_data[1]);
+		safe_close(pipe_data[1]);
 		pipe_data[6] = 0;
 	}
 	if (pipe_data[8] && pipe_data[7])
 	{
-		close(pipe_data[2]);
+		safe_close(pipe_data[2]);
 		pipe_data[7] = 0;
 	}
 	if (!pipe_data[7] && !pipe_data[6])
 		pipe_data[8] = 0;
-	close(fd_[1]);
-	close(_fd[0]);
+	safe_close(fd_[1]);
+	safe_close(_fd[0]);
 	if (pipe_data[0] > 1)
 		_fd[0] = fd_[0];
 	else
-		close(fd_[0]);
+		safe_close(fd_[0]);
 }

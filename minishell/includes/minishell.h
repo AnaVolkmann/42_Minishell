@@ -252,5 +252,6 @@ int			count_digits_in_int(int num);
 char		**prepare_cmd_arguments(char *cmd, char **envp, int condition);
 int			check_command_file_permissions(t_ast_node *head, char **env);
 int			handle_file_error_message(char *file, int _status);
+void		safe_close(int fd);
 
 #endif
