@@ -20,7 +20,7 @@
  * 
  * @param _cmd_ The command array.
  */
-void	ft_exit(char **_cmd_)
+void	ft_exit(char **_cmd_, t_env *env)
 {
 	int				status;
 
@@ -32,7 +32,7 @@ void	ft_exit(char **_cmd_)
 	else if (_cmd_[1])
 		status = string_to_int(_cmd_[1]);
 	free_string_array(_cmd_);
-	exit(status);
+	cleanup_and_exit_shell(env, status);
 }
 
 /** 

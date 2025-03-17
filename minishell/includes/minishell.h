@@ -77,7 +77,7 @@ typedef struct s_env
 
 
 
-void		ft_exit(char **_cmd_);
+void		ft_exit(char **_cmd_, t_env *env);
 int			export_print_or_export(char **_cmd_);
 
 /* ------------------ Main Shell ------------------ */

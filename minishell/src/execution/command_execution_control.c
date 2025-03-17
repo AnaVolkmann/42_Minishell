@@ -145,7 +145,7 @@ int	execute_builtin_command_in_child(
 	else if (str_cmp(cmd[0], "cd", NULL))
 		status = ft_cd(cmd, env, _out_fd);
 	else if (str_cmp(cmd[0], "exit", NULL))
-		ft_exit(cmd);
+		ft_exit(cmd, env);
 	free_string_array(cmd);
 	return (status);
 }
