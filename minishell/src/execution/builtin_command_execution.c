@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:35 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 14:21:53 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:48:06 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ int	manage_builtin_execution(t_ast_node *head, int *_fd, t_env *env, int *pipe_d
 			status = simple_child_for_builtins(head, _fd, env, pipe_data);
 		else
 			status = execute_child_with_redirections(head, _fd, env, pipe_data);
-		free_string_array(head->args);
+		// if (head->args)
+		// 	free_string_array(head->args);
 	}
 	else
 		status = manage_single_builtin_execution(head, _fd, env, pipe_data);

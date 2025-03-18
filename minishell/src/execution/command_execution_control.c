@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:49 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 14:23:59 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:14:26 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,5 @@ int	execute_builtin_command_in_child(
 		status = ft_cd(head->args, env, _out_fd);
 	else if (str_cmp(head->args[0], "exit", NULL))
 		ft_exit(head->args, env, head);
-	//free_string_array(head->args);
 	return (status);
 }

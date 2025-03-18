@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:48 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 16:11:57 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:10:13 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 	{
 		ft_putendl_fd("Minishell: exit: too many arguments.", 1);
 		status = 1;
+		// return ;
 	}
 	else if (_cmd_[1] && !is_string_numeric(_cmd_[1]))
 	{

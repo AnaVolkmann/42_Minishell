@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:46 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 16:15:47 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:23:23 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	execute_command_with_redirection(
 		exit(127);
 	}
 	parent_fds_managment(pipe_data, _fd, fd_);
-	free_string_array(cmd);
 	return (1);
 }
 
@@ -118,19 +117,16 @@ int	prepare_and_execute_command(
 		if (ft_strncmp(cmd_args[0], "exit", 5) == 0)
 			free_string_array(cmd_args);
 		status = manage_builtin_execution(head, _fd, env, pipe_data);
-		free_string_array(cmd_args);
 	}
 	else
 	{
 		pipe_data[10] += 1;
 		if (!pipe_data[8])
-		{
 			status = execute_command_basic(cmd_args, _fd, env->original_env, pipe_data);
-			free_string_array(cmd_args);
-		}
 		else
-			status = execute_command_with_redirection(cmd_args, _fd, env->original_env, pipe_data);
+		status = execute_command_with_redirection(cmd_args, _fd, env->original_env, pipe_data);
 	}
+	free_string_array(cmd_args);
 	if (pipe_data[0] > 1)
 		pipe_data[0] -= 1;
 	return (status);

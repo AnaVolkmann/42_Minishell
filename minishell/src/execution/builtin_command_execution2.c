@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:39 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 14:14:47 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:26:26 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,25 +99,8 @@ int	manage_single_builtin_execution(
 		t_ast_node *head, int *_fd, t_env *env, int *pipe_data)
 {
 	int				status;
-	//int				ex_status;
 
 	status = 0;
-	// if (str_cmp(cmd[0], "exit", NULL))
-	// {
-	// 	ex_status = 0;
-	// 	if (cmd[1] && cmd[2])
-	// 		return (ft_putendl_fd("Minishell: exit: too many arguments.", 1), 1);
-	// 	if (cmd[1] && !is_string_numeric(cmd[1]))
-	// 	{
-	// 		ft_putendl_fd("Minishell: exit: numeric argument required.", 1);
-	// 		ex_status = 255;
-	// 	}
-	// 	else if (cmd[1])
-	// 		ex_status = (ft_atoi(cmd[1]) % 256);
-	// 	free_string_array(cmd);
-	// 	ft_putendl_fd("EXIT", 1);
-	// 	cleanup_and_exit_shell(env, ex_status);
-	// }
 	if (!pipe_data[8])
 		status = execute_builtin_with_piping(head, _fd, env, pipe_data);
 	else
