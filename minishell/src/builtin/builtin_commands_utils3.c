@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:48 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 14:44:43 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:11:57 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,24 +95,3 @@ int	export_statment_check(char *_cmd_)
 	}
 	return (a);
 }
-
-// char **ft_copy(char **str)
-// {
-// 	int		i;
-// 	char	**copy;
-
-// 	if (!str)
-// 		return (NULL);
-// 	i = 0;
-// 	copy = malloc(sizeof(char *) * (ft_strlen(str) + 1));
-// 	if (!copy)
-// 		return (NULL);
-// 	while (str[i])
-// 	{
-// 		copy[i] = ft_strdup(str[i]);
-// 		if (!copy[i])
-// 			return (free_string_array(copy), NULL);
-// 		i++;
-// 	}
-// 	return (free(str), copy);
-// }

@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:46 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 14:44:19 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:15:47 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@ int	prepare_and_execute_command(
 
 	f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
 	cmd_args = merge_command_args(f_args, head->args);
-	// head->args = ft_copy(cmd_args);
-	// free(cmd_args); se fizer copia, garante o exit
 	if (check_if_command_is_builtin(cmd_args[0]))
 	{
+		if (ft_strncmp(cmd_args[0], "exit", 5) == 0)
+			free_string_array(cmd_args);
 		status = manage_builtin_execution(head, _fd, env, pipe_data);
 		free_string_array(cmd_args);
 	}
