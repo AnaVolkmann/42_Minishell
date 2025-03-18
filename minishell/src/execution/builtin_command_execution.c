@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_command_execution.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:35 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 22:34:41 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:33:34 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ int	is_string_numeric(char *s_1)
 	int				a;
 
 	a = 0;
+	if (s_1[0] == '-' || s_1[0] == '+')
+		a = 1;
 	while (s_1[a])
 	{
 		if (!ft_isdigit(s_1[a]))

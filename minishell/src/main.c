@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:51:55 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 11:23:25 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:29:12 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	run_minishell(t_env *env)
 		add_history(line);
 		tokens = process_and_tokenize_input(line);
 		if (!tokens)
-			status = 258;
+			status = 2;
 		if (!status)
 		{
 			ast = parse_tokens(&tokens);

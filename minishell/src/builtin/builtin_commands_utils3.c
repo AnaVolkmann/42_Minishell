@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_commands_utils3.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:48 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:12:42 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/18 13:34:46 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,17 @@ void	ft_exit(char **_cmd_, t_env *env)
 
 	status = 0;
 	if (_cmd_[1] && _cmd_[2])
+	{
+		ft_putendl_fd("Minishell: exit: too many arguments.", 1);
 		status = 1;
+	}
 	else if (_cmd_[1] && !is_string_numeric(_cmd_[1]))
+	{
+		ft_putendl_fd("Minishell: exit: numeric argument required.", 1);
 		status = 255;
+	}
 	else if (_cmd_[1])
-		status = string_to_int(_cmd_[1]);
+		status = (string_to_int(_cmd_[1]) % 256);
 	free_string_array(_cmd_);
 	cleanup_and_exit_shell(env, status);
 }
