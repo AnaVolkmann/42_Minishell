@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:35 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 13:33:34 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:21:53 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
  * @param pipe_data Pipe state information.
  * @return 1 if the child process was executed successfully.
  */
-int	simple_child_for_builtins(char **cmd, int *_fd, t_env *env, int *pipe_data)
+int	simple_child_for_builtins(t_ast_node *head, int *_fd, t_env *env, int *pipe_data)
 {
 	pid_t					pid;
 	int						fd_[2];
@@ -52,7 +52,7 @@ int	simple_child_for_builtins(char **cmd, int *_fd, t_env *env, int *pipe_data)
 			safe_close(_fd[0]);
 		close_pipe_ends(fd_[0], fd_[1]);
 		dup2(1, _out_fd_[1]);
-		status = execute_builtin_command_in_child(cmd, env, _out_fd_, pipe_data);
+		status = execute_builtin_command_in_child(head, env, _out_fd_, pipe_data);
 		exit(WEXITSTATUS(status));
 	}
 	close_pipe_ends(fd_[1], _fd[0]);
@@ -70,12 +70,12 @@ int	simple_child_for_builtins(char **cmd, int *_fd, t_env *env, int *pipe_data)
  * @param _out_fd Output file descriptors.
  * @param pipe_data Pipe state information.
  */
-void	exec_builtin_and_exit(char **cmd, t_env *env, int *_out_fd, int *pipe_data)
+void	exec_builtin_and_exit(t_ast_node *head, t_env *env, int *_out_fd, int *pipe_data)
 {
 	int				status;
 
 	status = execute_builtin_command_in_child(
-			cmd, env, _out_fd, pipe_data);
+			head, env, _out_fd, pipe_data);
 	exit(WEXITSTATUS(status));
 }
 
@@ -87,7 +87,7 @@ void	exec_builtin_and_exit(char **cmd, t_env *env, int *_out_fd, int *pipe_data)
  * @param pipe_data Pipe state information.
  * @return 1 if the child process was executed successfully.
  */
-int	execute_child_with_redirections(char **cmd, int *_fd, t_env *env, int *pipe_data)
+int	execute_child_with_redirections(t_ast_node *head, int *_fd, t_env *env, int *pipe_data)
 {
 	pid_t			pid;
 	int				_out_fd[2];
@@ -99,7 +99,7 @@ int	execute_child_with_redirections(char **cmd, int *_fd, t_env *env, int *pipe_
 		pipe(_out_fd);
 	pid = fork();
 	if (!pid)
-		exec_builtin_and_exit(cmd, env, _out_fd, pipe_data);
+		exec_builtin_and_exit(head, env, _out_fd, pipe_data);
 	if (pipe_data[8] && pipe_data[7])
 	{
 		safe_close(_out_fd[1]);
@@ -144,7 +144,7 @@ int	is_string_numeric(char *s_1)
  * @param pipe_data Pipe state information.
  * @return The status code of the executed command.
  */
-int	manage_builtin_execution(char **cmd, int *_fd, t_env *env, int *pipe_data)
+int	manage_builtin_execution(t_ast_node *head, int *_fd, t_env *env, int *pipe_data)
 {
 	int				status;
 
@@ -153,12 +153,12 @@ int	manage_builtin_execution(char **cmd, int *_fd, t_env *env, int *pipe_data)
 	if (pipe_data[0])
 	{
 		if (!pipe_data[8])
-			status = simple_child_for_builtins(cmd, _fd, env, pipe_data);
+			status = simple_child_for_builtins(head, _fd, env, pipe_data);
 		else
-			status = execute_child_with_redirections(cmd, _fd, env, pipe_data);
-		free_string_array(cmd);
+			status = execute_child_with_redirections(head, _fd, env, pipe_data);
+		free_string_array(head->args);
 	}
 	else
-		status = manage_single_builtin_execution(cmd, _fd, env, pipe_data);
+		status = manage_single_builtin_execution(head, _fd, env, pipe_data);
 	return (status);
 }

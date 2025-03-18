@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:36 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:56:22 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:18:37 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_env
 
 
 
-void		ft_exit(char **_cmd_, t_env *env);
+void		ft_exit(char **_cmd_, t_env *env, t_ast_node *head);
 int			export_print_or_export(char **_cmd_);
 
 /* ------------------ Main Shell ------------------ */
@@ -166,7 +166,7 @@ void		adjust_ast_nodes_for_execution(t_ast_node *head);
 void		command_executer(t_ast_node *head,
 				t_env *env, int *status);
 int			execute_ast_node(t_ast_node *head, int *piped, t_env *env);
-int			prepare_and_execute_command(char **cmd, int *fd,
+int			prepare_and_execute_command(t_ast_node *head, int *fd,
 				int *piped, t_env *env);
 int			handle_command_redirection(t_ast_node *head, int *piped,
 				t_env *env, int *fd);
@@ -177,11 +177,11 @@ void		initialize_or_reset_pipe_state(int *piped, int flag);
 int			open_file_for_redirection(
 				t_ast_node *head, int *piped, t_env *env, int status);
 int			check_if_command_is_builtin(char *cmd);
-int			manage_builtin_execution(char **cmd, int *fd,
+int			manage_builtin_execution(t_ast_node *head, int *fd,
 				t_env *env, int *piped);
-int			manage_single_builtin_execution(char **cmd, int *fd,
+int			manage_single_builtin_execution(t_ast_node *head, int *fd,
 				t_env *env, int *piped);
-int			execute_builtin_command_in_child(char **cmd,
+int			execute_builtin_command_in_child(t_ast_node *head,
 				t_env *env, int *out_fd, int *pipe_data);
 
 /* ----------- Path and Environment Variable Handling ---------------- */

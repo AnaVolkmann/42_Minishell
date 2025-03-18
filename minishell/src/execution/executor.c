@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:46:11 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:19:16 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	handle_piped_command_execution(
 	if (head->file_type == EXECUTE_FILE)
 	{
 		pipe_data[8] = 0;
-		status = prepare_and_execute_command(head->args, _fd, pipe_data, env);
+		status = prepare_and_execute_command(head, _fd, pipe_data, env);
 	}
 	if (head->type == T_REDIR_IN
 		|| head->type == T_REDIR_OUT
@@ -84,7 +84,7 @@ int	handle_command_redirection(
 	{
 		pipe_data[8] = 1;
 		status = prepare_and_execute_command(
-				head->left->args, _fd, pipe_data, env);
+				head->left, _fd, pipe_data, env);
 	}
 	if (head->left && head->left->type == T_PIPE
 		&& pipe_data[11])
@@ -123,7 +123,7 @@ int	execute_ast_node(t_ast_node *head, int *pipe_data, t_env *env)
 			status = handle_command_redirection(head, pipe_data, env, _fd);
 	}
 	if (head->file_type == EXECUTE_FILE)
-		status = prepare_and_execute_command(head->args, _fd, pipe_data, env);
+		status = prepare_and_execute_command(head, _fd, pipe_data, env);
 	status = wait_for_children(status, pipe_data);
 	if (pipe_data[6])
 		safe_close(pipe_data[1]);

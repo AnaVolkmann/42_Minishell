@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_adv.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:46 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 22:24:36 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:44:19 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,21 @@ int	execute_command_with_redirection(
  * @return The status of the executed command.
  */
 int	prepare_and_execute_command(
-		char **cmd, int *_fd, int *pipe_data, t_env *env)
+		t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 {
 	char				**cmd_args;
 	char				**f_args;
 	int					status;
 
-	f_args = prepare_cmd_arguments(cmd[0], env->original_env, 0);
-	cmd_args = merge_command_args(f_args, cmd);
+	f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
+	cmd_args = merge_command_args(f_args, head->args);
+	// head->args = ft_copy(cmd_args);
+	// free(cmd_args); se fizer copia, garante o exit
 	if (check_if_command_is_builtin(cmd_args[0]))
-		status = manage_builtin_execution(cmd_args, _fd, env, pipe_data);
+	{
+		status = manage_builtin_execution(head, _fd, env, pipe_data);
+		free_string_array(cmd_args);
+	}
 	else
 	{
 		pipe_data[10] += 1;

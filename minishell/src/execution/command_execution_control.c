@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_control.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:49 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:46:11 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:23:59 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,22 +130,22 @@ int	check_if_command_is_builtin(char *_cmd)
  * @return The status of the executed command.
  */
 int	execute_builtin_command_in_child(
-		char **cmd, t_env *env, int *_out_fd, int *pipe_data)
+		t_ast_node *head, t_env *env, int *_out_fd, int *pipe_data)
 {
 	int			status;
 
 	status = 0;
 	(void)pipe_data;
-	if (str_cmp(cmd[0], "echo", NULL))
-		status = ft_echo(cmd, _out_fd);
-	else if (str_cmp(cmd[0], "pwd", "env"))
-		status = env_or_pwd_cmd(cmd[0], env, 0, _out_fd);
-	else if (str_cmp(cmd[0], "export", "unset"))
-		cmd = unset_or_export_cmd(cmd, env, _out_fd, &status);
-	else if (str_cmp(cmd[0], "cd", NULL))
-		status = ft_cd(cmd, env, _out_fd);
-	else if (str_cmp(cmd[0], "exit", NULL))
-		ft_exit(cmd, env);
-	free_string_array(cmd);
+	if (str_cmp(head->args[0], "echo", NULL))
+		status = ft_echo(head->args, _out_fd);
+	else if (str_cmp(head->args[0], "pwd", "env"))
+		status = env_or_pwd_cmd(head->args[0], env, 0, _out_fd);
+	else if (str_cmp(head->args[0], "export", "unset"))
+		head->args = unset_or_export_cmd(head->args, env, _out_fd, &status);
+	else if (str_cmp(head->args[0], "cd", NULL))
+		status = ft_cd(head->args, env, _out_fd);
+	else if (str_cmp(head->args[0], "exit", NULL))
+		ft_exit(head->args, env, head);
+	//free_string_array(head->args);
 	return (status);
 }
