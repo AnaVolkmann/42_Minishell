@@ -154,6 +154,31 @@ char	**unset_or_export_cmd(char **cmd, t_env *env, int *_out_fd, int *s)
 	return (cmd);
 }
 
+static char	*handle_edge(char **cmd, t_env *env, int *_out_fd)
+{
+	char	*new_path;
+
+	new_path = NULL;
+	if (!cmd[1] || !ft_strncmp(cmd[1], "~", 2))
+	{
+		new_path = get_env_value(env, "HOME");
+		if (!new_path)
+			return (ft_putendl_fd("  err: cd(): HOME is not set.", _out_fd[1]), NULL);
+	}
+	else if (!ft_strncmp(cmd[1], "-", 2))
+	{
+		new_path = get_env_value(env, "OLDPWD");
+		if (!new_path)
+			return (ft_putendl_fd("  err: cd(): OLDPWD is not set.", _out_fd[1]), NULL);
+		printf("%s\n", new_path);
+	}
+	else if (cmd[1] && cmd[2])
+		return (ft_putendl_fd("  err: cd(): Too many arguments", _out_fd[1]), NULL);
+	else
+		new_path = ft_strdup(cmd[1]);
+	return (new_path);
+}
+
 /**
  * @brief Handles the `cd` command to change the current directory.
  * @param _cmd Command arguments.
@@ -165,26 +190,22 @@ int	ft_cd(char **cmd, t_env *env, int *_out_fd)
 {
 	int					a;
 	char				*new_path;
+	char				*current_pwd;
 
-	if (cmd[1] && cmd[2])
-		ft_putendl_fd("  err: cd(): Too many arguments", _out_fd[1]);
-	else
-	{
-		if (change_current_directory(cmd[1], env) < 0)
-			ft_putendl_fd("  err: cd(): Only existing destinations are allowed", _out_fd[1]);
-		else
-		{
-			a = find_env_var_index(env, "PWD");
-			if (a >= 0)
-				remove_env_entry(env, a);
-			new_path = get_current_working_directory(100, 5, _out_fd[1]);
-			if (new_path)
-			{
-				set_new_pwd_in_env(new_path, env, a);
-				free(new_path);
-			}
-			return (0);
-		}
-	}
-	return (256);
+	new_path = handle_edge(cmd, env, _out_fd);
+	if (!new_path)
+		return (256);
+	current_pwd = get_current_working_directory(100, 5, _out_fd[1]);
+	if (change_current_directory(new_path, env) < 0)
+		return (free(current_pwd), free(new_path),
+				ft_putendl_fd("  err: cd(): Only existing destinations are allowed", _out_fd[1]), 256);
+	free(new_path);
+	set_old_pwd_in_env(current_pwd, env);
+	a = find_env_var_index(env, "PWD");
+	if (a >= 0)
+		remove_env_entry(env, a);
+	new_path = get_current_working_directory(100, 5, _out_fd[1]);
+	if (new_path)
+		return (set_new_pwd_in_env(new_path, env, a), free(new_path), 0);
+	return (0);
 }

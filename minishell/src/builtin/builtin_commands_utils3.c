@@ -96,3 +96,45 @@ int	export_statment_check(char *_cmd_)
 	}
 	return (a);
 }
+
+char	*get_env_value(t_env *env, char *key)
+{
+	int		index;
+	char	*value;
+
+	value = NULL;
+	index = find_env_var_index(env, key);
+	if (index >= 0)
+		value = ft_strdup(env->parsed_env[index][1]);
+	return (value);
+}
+
+
+void	set_old_pwd_in_env(char *old, t_env *env)
+{
+	char				**exp_pwd;
+	int					a;
+	int					b;
+	int					i;
+	
+	a = 0;
+	b = 7;
+	i = find_env_var_index(env, "OLDPWD");
+	if (i >= 0)
+		remove_env_entry(env, i);
+	exp_pwd = malloc(3 * sizeof(char *));
+	if (!exp_pwd)
+		return ;
+	exp_pwd[0] = strcopy("export");
+	exp_pwd[1] = malloc(sizeof_str(old, '\0') + 8);
+	if (!exp_pwd[1])
+		return ;
+	s_strcopy(exp_pwd[1], "OLDPWD=", 0, 7);
+	while (old[a])
+		exp_pwd[1][b++] = old[a++];
+	exp_pwd[1][b] = '\0';
+	exp_pwd[2] = 0;
+	unset_or_export_cmd(exp_pwd, env, NULL, &a);
+	free_string_array(exp_pwd);
+	free(old);
+}
