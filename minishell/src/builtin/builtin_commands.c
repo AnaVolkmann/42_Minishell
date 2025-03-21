@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:51 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 14:08:52 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:19:12 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,19 @@ int	ft_echo(char **cmd, int *_out_fd)
  * @param _out_fd Output file descriptor for printing.
  * @return 0 on success, 256 on failure.
  */
-int	env_or_pwd_cmd(char *cmd, t_env *env, int con, int *_out_fd)
+int	env_or_pwd_cmd(char **cmd, t_env *env, int con, int *_out_fd)
 {
 	int		a;
 	char	*absolute_pwd;
 
 	a = -1;
-	if (str_cmp(cmd, "env", NULL))
+	if (cmd[1] && str_cmp(cmd[0], "pwd", NULL))
+		return (ft_putendl_fd("pwd: too many arguments.", 2), 1);
+	if (str_cmp(cmd[0], "env", NULL))
 	{
+		if (cmd[1])
+			return (ft_putendl_fd("env: no such file or directory.",
+						_out_fd[1]), 127);
 		if (con)
 			print_export_declaration_to_fd(env, _out_fd);
 		else
@@ -74,10 +79,7 @@ int	env_or_pwd_cmd(char *cmd, t_env *env, int con, int *_out_fd)
 	}
 	absolute_pwd = get_current_working_directory(100, 5, _out_fd[1]);
 	if (absolute_pwd)
-	{
-		ft_putendl_fd(absolute_pwd, _out_fd[1]);
-		return (free(absolute_pwd), 0);
-	}
+		return (ft_putendl_fd(absolute_pwd, _out_fd[1]), free(absolute_pwd), 0);
 	return (256);
 }
 
@@ -117,6 +119,23 @@ char	**ft_export(char **_cmd, t_env *env, int *_out_fd, int **s)
 	return (_cmd);
 }
 
+static void	unset_helper(char **cmd, t_env *env, int *s)
+{
+	int			a;
+	int			c;
+
+	a = 1;
+	while (cmd[a])
+		{
+			c = find_env_var_index(env, cmd[a]);
+			if (c >= 0)
+				remove_env_entry(env, c);
+			else
+				*s = 256;
+			a++;
+		}
+}
+
 /**
  * @brief Handles both `unset` and `export` commands.
  * @param _cmd Command arguments.
@@ -127,29 +146,24 @@ char	**ft_export(char **_cmd, t_env *env, int *_out_fd, int **s)
  */
 char	**unset_or_export_cmd(char **cmd, t_env *env, int *_out_fd, int *s)
 {
-	int				a;
-	int				c;
+	char			**util;
 
-	a = 1;
+	util = NULL;
 	*s = 0;
-	if (cmd[a] && str_cmp(cmd[0], "unset", NULL) && env->parsed_env[0])
-	{
-		while (cmd[a])
-		{
-			c = find_env_var_index(env, cmd[a]);
-			if (c >= 0)
-				remove_env_entry(env, c);
-			else
-				*s = 256;
-			a++;
-		}
-	}
+	if (cmd[1] && str_cmp(cmd[0], "unset", NULL) && env->parsed_env[0])
+		unset_helper(cmd, env, s);
 	else if (str_cmp(cmd[0], "export", NULL))
 	{
 		if (export_print_or_export(cmd))
 			cmd = ft_export(cmd, env, _out_fd, &s);
 		else
-			env_or_pwd_cmd("env", env, 1, _out_fd);
+		{
+			util = malloc(sizeof(char *) * 2);
+			util[0] = ft_strdup("env");
+			util[1] = NULL;
+			env_or_pwd_cmd(util, env, 1, _out_fd);
+			free_string_array(util);
+		}
 	}
 	return (cmd);
 }

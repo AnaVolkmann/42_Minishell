@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:49 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 17:14:26 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:58:46 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	execute_builtin_command_in_child(
 	if (str_cmp(head->args[0], "echo", NULL))
 		status = ft_echo(head->args, _out_fd);
 	else if (str_cmp(head->args[0], "pwd", "env"))
-		status = env_or_pwd_cmd(head->args[0], env, 0, _out_fd);
+		status = env_or_pwd_cmd(head->args, env, 0, _out_fd);
 	else if (str_cmp(head->args[0], "export", "unset"))
 		head->args = unset_or_export_cmd(head->args, env, _out_fd, &status);
 	else if (str_cmp(head->args[0], "cd", NULL))
