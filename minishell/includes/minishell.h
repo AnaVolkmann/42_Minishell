@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:36 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 14:18:37 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:59:14 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_ast_node	*create_and_link_redirection(t_token **tokens, t_token *tmp);
 
 int			ft_cd(char **cmd, t_env *env, int *out_fd);
 int			ft_echo(char **cmd, int *out_fd);
-int			env_or_pwd_cmd(char *cmd, t_env *env, int condition, int *out_fd);
+int			env_or_pwd_cmd(char **cmd, t_env *env, int condition, int *out_fd);
 char		**ft_export(char **cmd, t_env *env, int *out_fd, int **status);
 char		**unset_or_export_cmd(char **cmd, t_env *env,
 				int *out_fd, int *status);
