@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:12:41 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:16:37 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:42:20 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,31 +60,41 @@ char	*expand_variable_in_string(char *var, t_env *env, int a, int *f_hole)
 	return (new_var);
 }
 
-char	*recursively_expand_variables(
-		char *var, t_env *env, int __con, int *f_arr)
+char *recursively_expand_variables(char *var, t_env *env, int __con, int *f_arr)
 {
-	char						*new_var;
-
-	while (var[f_arr[0]])
-	{
-		if (var[f_arr[0]] == 39)
-		{
-			f_arr[0]++;
-			f_arr[1]++;
-			while (!(f_arr[2] % 2) && var[f_arr[0]] && var[f_arr[0]] != 39)
-				f_arr[0]++;
-		}
-		if (var[f_arr[0]] == 34)
-			f_arr[2]++;
-		if (is_valid_variable_start(var, f_arr[0], 1)
-			&& ((!(f_arr[2] % 2) && __con) || (f_arr[2] % 2 && !__con)))
-			return (new_var = expand_variable_in_string(
-					var, env, f_arr[0], &f_arr[0]),
-				recursively_expand_variables(new_var,
-					env, __con, f_arr));
-		f_arr[0]++;
-	}
-	return (var);
+    char *new_var;
+    
+    if (var == NULL || var[0] == '\0')
+        return ft_strdup("");
+    if ((var[0] == '$' && var[1] == '"') || (var[0] == '$' && var[1] == '\''))
+        return ft_strdup("");
+    if (var[0] == '$' && var[1] == '$')
+    {
+        char *pid_str = ft_itoa(getpid());
+        return ft_strdup(pid_str);
+    }
+    while (var[f_arr[0]])
+    {
+        if (var[f_arr[0]] == 39)
+        {
+            f_arr[0]++;
+            f_arr[1]++;
+            while (!(f_arr[2] % 2) && var[f_arr[0]] && var[f_arr[0]] != 39)
+                f_arr[0]++;
+        }
+        if (var[f_arr[0]] == 34)
+            f_arr[2]++;
+        if (is_valid_variable_start(var, f_arr[0], 1)
+            && ((!(f_arr[2] % 2) && __con) || (f_arr[2] % 2 && !__con)))
+        {
+            new_var = expand_variable_in_string(var, env, f_arr[0], &f_arr[0]);
+            if (new_var && new_var[0] == '\0')
+                return ft_strdup("");
+            return recursively_expand_variables(new_var, env, __con, f_arr);
+        }
+        f_arr[0]++;
+    }
+    return var;
 }
 
 char	**refactore_args_array(char **args, int *quick_norm_fix)
