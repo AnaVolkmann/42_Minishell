@@ -6,19 +6,17 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:30 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:50:34 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:17:00 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief Finds the index of a substring within a list of strings.
+/** @brief Finds the index of a substring within a list of strings.
  * @param haystack The array of strings to search in.
  * @param needle The substring to search for.
  * @param n_length The length of the substring.
- * @return The index of the substring if found, or -1 if not.
- */
+ * @return The index of the substring if found, or -1 if not.*/
 int	find_substr_index(char **haystack, char *needle, int n_length)
 {
 	int		a;
@@ -43,12 +41,10 @@ int	find_substr_index(char **haystack, char *needle, int n_length)
 	return (-1);
 }
 
-/**
- * @brief Checks if a given path is accessible with the specified mode.
+/** @brief Checks if a given path is accessible with the specified mode.
  * @param path The file path to check.
  * @param mode The mode to check for (e.g., read, write).
- * @return 1 if the path is accessible, 0 if not.
- */
+ * @return 1 if the path is accessible, 0 if not.*/
 int	is_path_accessible(char *path, int mode)
 {
 	if (access(path, mode) < 0)
@@ -56,13 +52,12 @@ int	is_path_accessible(char *path, int mode)
 	return (1);
 }
 
-
-/**
- * @brief Increments the index to the next part of a path in an environment variable.
+/** @brief Increments the index to the next part of a path in an 
+ * environment variable.
  * @param env_var The environment variable containing the path.
- * @param indx_s The index array containing the current position and other state information.
- * @param a The current position within the environment variable string.
- */
+ * @param indx_s The index array containing the current position and 
+ * other state information.
+ * @param a The current position within the environment variable string.*/
 void	increment_path_index(char *env_var, int *indx_s, int *a)
 {
 	if (indx_s[3])
@@ -77,12 +72,11 @@ void	increment_path_index(char *env_var, int *indx_s, int *a)
 		*a = indx_s[1];
 }
 
-/**
- * @brief Counts the number of substrings in a string, delimited by a specified character.
+/** @brief Counts the number of substrings in a string, delimited
+ *  by a specified character.
  * @param str The string to search in.
  * @param del The delimiter character.
- * @return The number of substrings in the string.
- */
+ * @return The number of substrings in the string.*/
 int	count_substrings(char *str, char del)
 {
 	int			a;

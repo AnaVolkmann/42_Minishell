@@ -6,17 +6,17 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:18 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:54:41 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:13:54 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief Parses a command from the token list and creates an AST node for it.
+/** @brief Parses a command from the token list and creates an AST 
+ * node for it.
  * @param tokens The token list to parse the command from.
- * @return A pointer to the newly created command AST node, or NULL if memory allocation fails.
- */
+ * @return A pointer to the newly created command AST node, or 
+ * NULL if memory allocation fails.*/
 t_ast_node	*parse_command(t_token **tokens)
 {
 	t_ast_node		*command_node;
@@ -31,11 +31,10 @@ t_ast_node	*parse_command(t_token **tokens)
 	return (command_node);
 }
 
-/**
- * @brief Creates a file AST node from a given token.
+/** @brief Creates a file AST node from a given token.
  * @param token The token representing the file.
- * @return A pointer to the newly created file AST node, or NULL if memory allocation fails.
- */
+ * @return A pointer to the newly created file AST node
+ * , or NULL if memory allocation fails.*/
 t_ast_node	*create_file_node(t_token *token)
 {
 	t_ast_node			*node;
@@ -58,11 +57,11 @@ t_ast_node	*create_file_node(t_token *token)
 	return (node);
 }
 
-/**
- * @brief Recursively parses redirections from the token list and creates corresponding AST nodes.
+/** @brief Recursively parses redirections from the token list 
+and creates corresponding AST nodes.
  * @param tokens The token list to parse redirections from.
- * @return A pointer to the redirection AST node, or NULL if no valid redirection is found.
- */
+ * @return A pointer to the redirection AST node, or NULL if no
+ *  valid redirection is found.*/
 t_ast_node	*parse_redirection(t_token **tokens)
 {
 	t_token		*tmp;
@@ -92,11 +91,11 @@ t_ast_node	*parse_redirection(t_token **tokens)
 	return (parse_command(&tmp));
 }
 
-/**
- * @brief Recursively parses a pipeline of commands from the token list and creates corresponding AST nodes.
+/** @brief Recursively parses a pipeline of commands from the 
+ * token list and creates corresponding AST nodes.
  * @param tokens The token list to parse the pipeline from.
- * @return A pointer to the pipeline AST node, or NULL if no valid pipeline is found.
- */
+ * @return A pointer to the pipeline AST node, or NULL if no 
+ * valid pipeline is found.*/
 t_ast_node	*parse_pipeline(t_token **tokens)
 {
 	t_token		*tmp;
@@ -122,12 +121,11 @@ t_ast_node	*parse_pipeline(t_token **tokens)
 	return (parse_redirection(&tmp));
 }
 
-
-/**
- * @brief Parses the entire token list and creates the corresponding abstract syntax tree (AST).
+/** @brief Parses the entire token list and creates the corresponding 
+ * abstract syntax tree (AST).
  * @param tokens The token list to parse.
- * @return A pointer to the root AST node, or NULL if no valid AST could be created.
- */
+ * @return A pointer to the root AST node, or NULL if no valid AST 
+ * could be created.*/
 t_ast_node	*parse_tokens(t_token **tokens)
 {
 	if (!tokens || !*tokens)

@@ -6,20 +6,20 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:54 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:46:11 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:16:50 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief Merges two arrays of command arguments into one.
- *        It concatenates the arguments from the `f_args` array with those from the `_cmd_` array.
+/** @brief Merges two arrays of command arguments into one.
+ * It concatenates the arguments from the `f_args` array with 
+ * those from the `_cmd_` array.
  * @param f_args The first array of command arguments.
  * @param cmd The second array of command arguments to append to `f_args`.
- * @return A new array containing all the arguments from both `f_args` and `_cmd_`, 
- *         or NULL if memory allocation fails.
- */
+ * @return A new array containing all the arguments from both 
+ * `f_args` and `_cmd_`, 
+ * or NULL if memory allocation fails.*/
 char	**merge_command_args(char **f_args, char **cmd)
 {
 	int				a;

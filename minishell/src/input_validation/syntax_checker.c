@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:55 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:52:06 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:10:45 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	has_unclosed_quotes(const char *input)
 	}
 	return (quote_type != 0);
 }
-
 
 /**
  * @brief Checks for invalid redirections in the input string.

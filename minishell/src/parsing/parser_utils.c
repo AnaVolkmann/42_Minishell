@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:12 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:52:48 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:14:14 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_ast_node	*new_ast_node(t_token_type type)
 }
 
 /**
- * @brief Recursively frees all nodes in the AST, including their arguments and children.
+ * @brief Recursively frees all nodes in the AST, including their
+ *  arguments and children.
  * @param node The root AST node to free.
  */
 void	free_ast(t_ast_node *node)

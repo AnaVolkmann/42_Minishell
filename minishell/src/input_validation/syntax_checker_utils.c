@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:51 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:51:25 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:10:45 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	update_quote_counts(char c, int *s_q_count, int *d_q_count)
 	else if (c == 39)
 		(*s_q_count)++;
 }
-
 
 /**
  * @brief Skips over leading spaces and tab characters in a string.

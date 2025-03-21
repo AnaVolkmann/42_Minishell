@@ -6,14 +6,15 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:26 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:49:59 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:15:01 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * @brief Creates a file path by combining an environment variable with a file name.
+ * @brief Creates a file path by combining an environment variable
+ *  with a file name.
  * @param env_var The environment variable containing the path.
  * @param file The file to append to the environment variable's value.
  * @param indx_s Array storing index positions to assist in path construction.
@@ -48,9 +49,9 @@ char	*create_subpath_from_var(char *env_var, char *file, int *indx_s)
 	return (tmp_path);
 }
 
-
 /**
- * @brief Checks if a file exists in the system without using the environment variables.
+ * @brief Checks if a file exists in the system without using the 
+ * environment variables.
  * @param file The file path to check.
  * @param mode The mode used to check access permissions.
  * @return The file path if it exists and is accessible, or NULL if not.
@@ -72,7 +73,8 @@ char	*check_path_without_env(char *file, int mode)
 }
 
 /**
- * @brief Resolves a file path using the environment's PATH variable or direct checking.
+ * @brief Resolves a file path using the environment's PATH 
+ * variable or direct checking.
  * @param file The file or command to find.
  * @param envp The environment variable array containing PATH.
  * @param env_var The name of the environment variable (usually "PATH").
@@ -109,7 +111,8 @@ char	*get_file_path(char *file, char **envp, char *env_var, int mode)
 }
 
 /**
- * @brief Extracts the next substring from a string, delimited by a specific character.
+ * @brief Extracts the next substring from a string, delimited
+ *  by a specific character.
  * @param str The string to extract the substring from.
  * @param del The delimiter character.
  * @param index The current index for tracking substring extraction.
@@ -141,11 +144,13 @@ char	*find_next_substring(char *str, char del, int *index)
 }
 
 /**
- * @brief Prepares command arguments, resolving file paths using the PATH variable if needed.
+ * @brief Prepares command arguments, resolving file paths using
+ *  the PATH variable if needed.
  * @param cmd The command string to parse.
  * @param envp The environment variable array containing PATH.
  * @param c The current index for argument processing.
- * @return An array of command arguments, with resolved file paths, or NULL if an error occurs.
+ * @return An array of command arguments, with resolved file paths,
+ *  or NULL if an error occurs.
  */
 char	**prepare_cmd_arguments(char *cmd, char **envp, int c)
 {
