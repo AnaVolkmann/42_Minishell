@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_command_execution.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:35 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 13:00:13 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:08:58 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@
 		piped[10]: children_count
 		piped[11]: second_heredoc_status */
 
+void	handle_pipe_redirection(int *_fd, int *pipe_data, int fd_[2])
+{
+	if (pipe_data[0] && pipe_data[0] <= pipe_data[5])
+	{
+		dup2(_fd[0], 0);
+	}
+	if (pipe_data[0] > 1)
+	{
+		dup2(fd_[1], 1);
+	}
+	else
+	{
+		safe_close(_fd[0]);
+	}
+}
+
 /** @brief Handles child process execution for built-in 
  * commands with optional piping.
  * @param cmd The command arguments.
@@ -33,7 +49,8 @@
  * @param env The environment structure.
  * @param pipe_data Pipe state information.
  * @return 1 if the child process was executed successfully.*/
-int	simple_child_for_builtins(t_ast_node *head, int *_fd, t_env *env, int *pipe_data)
+int	simple_child_for_builtins(t_ast_node *head,
+			int *_fd, t_env *env, int *pipe_data)
 {
 	pid_t					pid;
 	int						fd_[2];
@@ -45,15 +62,11 @@ int	simple_child_for_builtins(t_ast_node *head, int *_fd, t_env *env, int *pipe_
 	pid = fork();
 	if (!pid)
 	{
-		if (pipe_data[0] && pipe_data[0] <= pipe_data[5])
-			dup2(_fd[0], 0);
-		if (pipe_data[0] > 1)
-			dup2(fd_[1], 1);
-		else
-			safe_close(_fd[0]);
+		handle_pipe_redirection(&_fd[0], pipe_data, fd_);
 		close_pipe_ends(fd_[0], fd_[1]);
 		dup2(_out_fd_[1], 1);
-		status = execute_builtin_command_in_child(head, env, _out_fd_, pipe_data);
+		status = execute_builtin_command_in_child(head,
+				env, _out_fd_, pipe_data);
 		exit(WEXITSTATUS(status));
 	}
 	close_pipe_ends(fd_[1], _fd[0]);
@@ -64,20 +77,6 @@ int	simple_child_for_builtins(t_ast_node *head, int *_fd, t_env *env, int *pipe_
 	return (1);
 }
 
-/** @brief Executes a built-in command in the child process and exits.
- * @param _cmd_ The command arguments.
- * @param env The environment structure.
- * @param _out_fd Output file descriptors.
- * @param pipe_data Pipe state information.*/
-void	exec_builtin_and_exit(t_ast_node *head, t_env *env, int *_out_fd, int *pipe_data)
-{
-	int				status;
-
-	status = execute_builtin_command_in_child(
-			head, env, _out_fd, pipe_data);
-	exit(WEXITSTATUS(status));
-}
-
 /** @brief Executes a built-in command in a child process with
  *  redirection support.
  * @param cmd The command arguments.
@@ -85,7 +84,8 @@ void	exec_builtin_and_exit(t_ast_node *head, t_env *env, int *_out_fd, int *pipe
  * @param env The environment structure.
  * @param pipe_data Pipe state information.
  * @return 1 if the child process was executed successfully.*/
-int	execute_child_with_redirections(t_ast_node *head, int *_fd, t_env *env, int *pipe_data)
+int	execute_child_with_redirections(t_ast_node *head,
+		int *_fd, t_env *env, int *pipe_data)
 {
 	pid_t			pid;
 	int				_out_fd[2];
@@ -139,7 +139,8 @@ int	is_string_numeric(char *s_1)
  * @param env The environment structure.
  * @param pipe_data Pipe state information.
  * @return The status code of the executed command.*/
-int	manage_builtin_execution(t_ast_node *head, int *_fd, t_env *env, int *pipe_data)
+int	manage_builtin_execution(t_ast_node *head,
+		int *_fd, t_env *env, int *pipe_data)
 {
 	int				status;
 

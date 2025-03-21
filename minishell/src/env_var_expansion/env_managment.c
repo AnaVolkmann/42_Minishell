@@ -3,25 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   env_managment.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:12:27 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:10:44 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:39:36 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/** 
- * @brief Copies the environment excluding the entry at a specific index.
- * 
+/** @brief Copies the environment excluding the entry at a specific index.
  * @param env The environment to copy.
  * @param a The size of the original environment.
  * @param a_2 Additional size to consider.
  * @param d Index to exclude from the copy.
- * 
- * @return A new environment array excluding the entry at index d.
- */
+ * @return A new environment array excluding the entry at index d.*/
 char	**copy_env_exclude_index(char **env, int a, int a_2, int d)
 {
 	char				**new_thing;
@@ -45,16 +41,13 @@ char	**copy_env_exclude_index(char **env, int a, int a_2, int d)
 	return (new_thing);
 }
 
-/** 
- * @brief Duplicates the environment structure excluding a specific entry.
- * 
+/** @brief Duplicates the environment structure excluding a specific entry.
  * @param env The environment to duplicate.
  * @param a Size of the parsed environment.
  * @param a_2 Additional size.
  * @param d Index to exclude from duplication.
- * 
- * @return A new duplicated environment structure excluding the entry at index d.
- */
+ * @return A new duplicated environment structure excluding 
+ * the entry at index d.*/
 char	***duplicate_env_structure(t_env *env, int a, int a_2, int d)
 {
 	int				b;
@@ -84,12 +77,9 @@ char	***duplicate_env_structure(t_env *env, int a, int a_2, int d)
 	return (new_thing);
 }
 
-/** 
- * @brief Removes an environment entry at a specific index.
- * 
+/** @brief Removes an environment entry at a specific index.
  * @param env The environment from which to remove the entry.
- * @param c Index of the entry to remove.
- */
+ * @param c Index of the entry to remove.*/
 void	remove_env_entry(t_env *env, int c)
 {
 	int				a;
@@ -104,14 +94,11 @@ void	remove_env_entry(t_env *env, int c)
 	}
 }
 
-/** 
- * @brief Updates the value of an environment variable at a specific index.
- * 
+/** @brief Updates the value of an environment variable at a specific index.
  * @param env The environment to update.
  * @param cmd The new command string (key=value).
  * @param a Index of the variable to update.
- * @param con Condition for setting the value.
- */
+ * @param con Condition for setting the value.*/
 void	update_env_value_at_index(t_env *env, char *cmd, int a, int con)
 {
 	int				b;
@@ -138,15 +125,11 @@ void	update_env_value_at_index(t_env *env, char *cmd, int a, int con)
 	}
 }
 
-
-/** 
- * @brief Adds a new environment entry or updates an existing one.
- * 
+/** @brief Adds a new environment entry or updates an existing one.
  * @param env The environment to update.
  * @param cmd The command string (key=value) to add.
  * @param b Length of the key.
- * @param con Condition for the value to be set.
- */
+ * @param con Condition for the value to be set.*/
 void	add_env_entry(t_env *env, char *cmd, int b, int con)
 {
 	int				a;

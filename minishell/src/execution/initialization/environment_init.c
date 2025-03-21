@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment_init.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:29 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:26:27 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:13:58 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	**duplicate_environment_variables(char **env)
 }
 
 /**
- * @brief Initializes the shell's environment structure by parsing the environment variables.
+ * @brief Initializes the shell's environment structure
+ *  by parsing the environment variables.
  * @param env The environment structure to initialize.
  * @param original_env The original environment variables array.
  * @param a Index to start parsing from.
@@ -102,7 +103,8 @@ void	initialize_default_variables(t_env *env, int a)
 }
 
 /**
- * @brief Initializes the shell environment with the provided original environment.
+ * @brief Initializes the shell environment with the 
+ * provided original environment.
  * @param env The environment structure to initialize.
  * @param original_env The original environment variables.
  * @return 1 on success, 0 on failure.

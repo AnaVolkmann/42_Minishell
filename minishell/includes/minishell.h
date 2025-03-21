@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:36 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 12:51:45 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:58:34 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void		set_new_pwd_in_env(char *new_path, t_env *env, int unused);
 int			change_current_directory(char *path, t_env *env);
 char		*get_current_working_directory(int size, int tries, int fd);
 int			export_statment_check(char *_cmd_);
+void		exec_builtin_and_exit(t_ast_node *head,
+				t_env *env, int *_out_fd, int *pipe_data);
 
 /* ------------------ Environment Init ---------------------------- */
 

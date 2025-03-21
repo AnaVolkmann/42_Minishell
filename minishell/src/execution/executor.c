@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 14:19:16 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:50:27 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,21 @@ int	handle_piped_command_execution(
 		|| head->type == T_REDIR_HEREDOC)
 		return (handle_command_redirection(head, pipe_data, env, _fd));
 	if (head->left)
-		status = handle_piped_command_execution(head->left, pipe_data, env, _fd);
+		status = handle_piped_command_execution(head->left,
+				pipe_data, env, _fd);
 	if (head->right)
-		status = handle_piped_command_execution(head->right, pipe_data, env, _fd);
+		status = handle_piped_command_execution(head->right,
+				pipe_data, env, _fd);
 	return (status);
 }
 
-/** @brief Handles redirection commands, updating pipe and file descriptors.
+/** @brief Handles redirection commands, updating pipe and file
+ *  descriptors.
  * Manages redirection types (input, output, append, heredoc)
  * and executes commands if needed.
- *
  * @param head AST node representing the redirection.
- * @param piped_state Pipe state structure containing redirection information.
+ * @param piped_state Pipe state structure containing redirection
+ *  information.
  * @param env Environment variables and shell state.
  * @param fd File descriptors for redirection.
  * @return Status after processing redirection. */
@@ -83,12 +86,12 @@ int	handle_command_redirection(
 		&& pipe_data[11] && !status)
 	{
 		pipe_data[8] = 1;
-		status = prepare_and_execute_command(
-				head->left, _fd, pipe_data, env);
+		status = prepare_and_execute_command(head->left, _fd, pipe_data, env);
 	}
 	if (head->left && head->left->type == T_PIPE
 		&& pipe_data[11])
-		status = handle_piped_command_execution(head->left, pipe_data, env, _fd);
+		status = handle_piped_command_execution(head->left,
+				pipe_data, env, _fd);
 	if (head->left && (head->left->type == T_REDIR_IN
 			|| head->left->type == T_REDIR_OUT
 			|| head->left->type == T_REDIR_APPEND

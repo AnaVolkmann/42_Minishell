@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_adv.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:46 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 10:57:59 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:09:38 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@
 		piped[11]: second_heredoc_status */
 
 /**
- * @brief Executes a basic command without redirection or piping in a child process.
- *        Handles input/output redirection if piping is used.
+ * @brief Executes a basic command without redirection or piping
+in a child process. Handles input/output redirection if piping is used.
  * @param cmd The command arguments.
  * @param _fd File descriptors for input and output.
  * @param env The environment variables.
  * @param pipe_data Pipe state information.
  * @return Returns 1 upon successful execution.
  */
-int	execute_command_basic(char **cmd, int *_fd, char **env, int *pipe_data)
+int	exec_cmd_basic(char **cmd, int *_fd, char **env, int *pipe_data)
 {
 	pid_t				pid;
 	int					fd_[2];
@@ -73,7 +73,7 @@ int	execute_command_basic(char **cmd, int *_fd, char **env, int *pipe_data)
  * @param pipe_data Pipe state information.
  * @return Returns 1 upon successful execution.
  */
-int	execute_command_with_redirection(
+int	exec_cmd_w_redir(
 		char **cmd, int *_fd, char **env, int *pipe_data)
 {
 	pid_t				pid;
@@ -104,11 +104,11 @@ int	execute_command_with_redirection(
  * @return The status of the executed command.
  */
 int	prepare_and_execute_command(
-		t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
+t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 {
 	char				**cmd_args;
 	char				**f_args;
-	int					status;
+	int					stat;
 
 	f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
 	cmd_args = merge_command_args(f_args, head->args);
@@ -116,24 +116,26 @@ int	prepare_and_execute_command(
 	{
 		if (ft_strncmp(cmd_args[0], "exit", 5) == 0)
 			free_string_array(cmd_args);
-		status = manage_builtin_execution(head, _fd, env, pipe_data);
+		stat = manage_builtin_execution(head, _fd, env, pipe_data);
 	}
 	else
 	{
 		pipe_data[10] += 1;
 		if (!pipe_data[8])
-			status = execute_command_basic(cmd_args, _fd, env->original_env, pipe_data);
+			stat = exec_cmd_basic(cmd_args, _fd, env->original_env, pipe_data);
 		else
-		status = execute_command_with_redirection(cmd_args, _fd, env->original_env, pipe_data);
+			stat = exec_cmd_w_redir(cmd_args,
+					_fd, env->original_env, pipe_data);
 	}
 	free_string_array(cmd_args);
 	if (pipe_data[0] > 1)
 		pipe_data[0] -= 1;
-	return (status);
+	return (stat);
 }
 
 /**
- * @brief Waits for the child processes to finish and handles signals accordingly.
+ * @brief Waits for the child processes to finish and handles 
+ * signals accordingly.
  * @param status The status code of the child process.
  * @param pipe_data Pipe state information.
  * @return The exit status of the last child process or a signal value.

@@ -3,25 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_commands_utils3.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:48 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 12:40:08 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:42:09 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/** 
- * @brief Exits the program with a status code determined by the input command.
- * 
+/** @brief Exits the program with a status code determined by the input command.
  * If more than one argument is provided, exits with status 1. 
  * If the first argument is not a numeric string, exits with status 255. 
  * Otherwise, converts the first argument to an integer and exits 
  * with that status.
- * 
- * @param _cmd_ The command array.
- */
+ * @param _cmd_ The command array.*/
 void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 {
 	int				status;
@@ -31,7 +27,6 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 	{
 		ft_putendl_fd("Minishell: exit: too many arguments.", 1);
 		status = 1;
-		// return ;
 	}
 	else if (_cmd_[1] && !is_string_numeric(_cmd_[1]))
 	{
@@ -44,17 +39,12 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 	cleanup_and_exit_shell(env, status);
 }
 
-/** 
- * @brief Checks whether the export command should print or 
+/** @brief Checks whether the export command should print or 
  * execute the export operation.
- * 
  * Loops through the command arguments and returns 1 if 
  * at least one argument exists.
- * 
  * @param _cmd_ The command array.
- * 
- * @return 1 if export operation is valid, 0 otherwise.
- */
+ * @return 1 if export operation is valid, 0 otherwise.*/
 int	export_print_or_export(char **_cmd_)
 {
 	int	i;
@@ -69,16 +59,11 @@ int	export_print_or_export(char **_cmd_)
 	return (0);
 }
 
-/** 
- * @brief Checks if the export statement has a valid format.
- * 
+/**  @brief Checks if the export statement has a valid format. 
  * Checks that the string before the `=` in the export 
  * command is a valid identifier, and that the syntax is correct.
- * 
  * @param _cmd_ The command string.
- * 
- * @return The position of the `=` if the format is valid, -1 if invalid.
- */
+ * @return The position of the `=` if the format is valid, -1 if invalid.*/
 int	export_statment_check(char *_cmd_)
 {
 	int							a;

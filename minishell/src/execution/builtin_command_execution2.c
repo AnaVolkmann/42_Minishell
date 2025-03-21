@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_command_execution2.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:39 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 17:26:26 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:09:11 by alawrence        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
  * @param pipe_data Pipe state information.
  * @return The status code of the executed command.
  */
-int	execute_builtin_with_piping(t_ast_node *head, int *_fd, t_env *env, int *pipe_data)
+int	execute_builtin_with_piping(t_ast_node *head,
+		int *_fd, t_env *env, int *pipe_data)
 {
 	int				status;
 	int				_out_fd[2];
@@ -52,7 +53,8 @@ int	execute_builtin_with_piping(t_ast_node *head, int *_fd, t_env *env, int *pip
 }
 
 /**
- * @brief Executes a built-in command with simple piping support in a child process.
+ * @brief Executes a built-in command with simple piping 
+ * support in a child process.
  * @param _cmd_ The command arguments.
  * @param _fd File descriptors for input and output.
  * @param env The environment structure.
@@ -87,8 +89,10 @@ int	execute_builtin_with_simple_piping(
 }
 
 /**
- * @brief Manages the execution of a single built-in command with or without piping.
- *        Handles special cases like `exit` and dispatches to other execution functions.
+ * @brief Manages the execution of a single built-in command with 
+ * or without piping.
+ * Handles special cases like `exit` and dispatches to other
+ * execution functions.
  * @param cmd The command arguments.
  * @param _fd File descriptors for input and output.
  * @param env The environment structure.
@@ -106,4 +110,19 @@ int	manage_single_builtin_execution(
 	else
 		status = execute_builtin_with_simple_piping(head, _fd, env, pipe_data);
 	return (status);
+}
+
+/** @brief Executes a built-in command in the child process and exits.
+ * @param _cmd_ The command arguments.
+ * @param env The environment structure.
+ * @param _out_fd Output file descriptors.
+ * @param pipe_data Pipe state information.*/
+void	exec_builtin_and_exit(t_ast_node *head,
+	t_env *env, int *_out_fd, int *pipe_data)
+{
+	int				status;
+
+	status = execute_builtin_command_in_child(
+			head, env, _out_fd, pipe_data);
+	exit(WEXITSTATUS(status));
 }
