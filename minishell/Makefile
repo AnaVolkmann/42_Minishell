@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+         #
+#    By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/16 19:13:13 by ana-lda-          #+#    #+#              #
-#    Updated: 2025/03/18 11:18:23 by ana-lda-         ###   ########.fr        #
+#    Updated: 2025/03/21 12:51:06 by lufiguei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRCS = $(SRCDIR)/main.c \
 	$(SRCDIR)/builtin/builtin_commands_utils.c \
 	$(SRCDIR)/builtin/builtin_commands_utils2.c \
 	$(SRCDIR)/builtin/builtin_commands_utils3.c \
+	$(SRCDIR)/builtin/builtin_commands_utils4.c\
 	$(SRCDIR)/signals/signal_handlers.c \
 	$(SRCDIR)/env_var_expansion/env_handling.c \
 	$(SRCDIR)/env_var_expansion/env_managment.c \

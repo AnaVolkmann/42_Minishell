@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:48 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 17:10:13 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:40:08 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 /** 
  * @brief Exits the program with a status code determined by the input command.
  * 
- * If more than one argument is provided, exits with status 1. If the first argument is not a numeric string, exits with status 255. 
- * Otherwise, converts the first argument to an integer and exits with that status.
+ * If more than one argument is provided, exits with status 1. 
+ * If the first argument is not a numeric string, exits with status 255. 
+ * Otherwise, converts the first argument to an integer and exits 
+ * with that status.
  * 
  * @param _cmd_ The command array.
  */
@@ -43,9 +45,11 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 }
 
 /** 
- * @brief Checks whether the export command should print or execute the export operation.
+ * @brief Checks whether the export command should print or 
+ * execute the export operation.
  * 
- * Loops through the command arguments and returns 1 if at least one argument exists.
+ * Loops through the command arguments and returns 1 if 
+ * at least one argument exists.
  * 
  * @param _cmd_ The command array.
  * 
@@ -53,7 +57,7 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
  */
 int	export_print_or_export(char **_cmd_)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (_cmd_[0] && _cmd_[i])
@@ -68,7 +72,8 @@ int	export_print_or_export(char **_cmd_)
 /** 
  * @brief Checks if the export statement has a valid format.
  * 
- * Checks that the string before the `=` in the export command is a valid identifier, and that the syntax is correct.
+ * Checks that the string before the `=` in the export 
+ * command is a valid identifier, and that the syntax is correct.
  * 
  * @param _cmd_ The command string.
  * 
@@ -109,14 +114,13 @@ char	*get_env_value(t_env *env, char *key)
 	return (value);
 }
 
-
 void	set_old_pwd_in_env(char *old, t_env *env)
 {
 	char				**exp_pwd;
 	int					a;
 	int					b;
 	int					i;
-	
+
 	a = 0;
 	b = 7;
 	i = find_env_var_index(env, "OLDPWD");

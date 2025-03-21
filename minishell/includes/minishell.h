@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:36 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 11:59:14 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:51:45 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ typedef struct s_env
 	char				**original_env;
 	char				***parsed_env;
 }	t_env;
-
-
 
 void		ft_exit(char **_cmd_, t_env *env, t_ast_node *head);
 int			export_print_or_export(char **_cmd_);
@@ -255,5 +253,7 @@ int			handle_file_error_message(char *file, int _status);
 void		safe_close(int fd);
 void		set_old_pwd_in_env(char *old, t_env *env);
 char		*get_env_value(t_env *env, char *key);
+char		*handle_edge(char **cmd, t_env *env, int *_out_fd);
+void		unset_helper(char **cmd, t_env *env, int *s);
 
 #endif

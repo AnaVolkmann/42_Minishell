@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_commands_utils2.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:44 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:12:19 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:38:36 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	print_env_var_to_fd(char *str_1, char *str_2, int fd)
 }
 
 /** 
- * @brief Prints all environment variables in the export format to the specified file descriptor.
+ * @brief Prints all environment variables in the export format to 
+ * the specified file descriptor.
  * 
  * @param arr The array of environment variables.
  * @param a The number of environment variables in the array.
@@ -61,7 +62,8 @@ void	print_export_vars(char ***arr, int a, int fd)
 }
 
 /** 
- * @brief Compares two strings lexicographically based on their characters' ASCII values.
+ * @brief Compares two strings lexicographically based on their 
+ * characters' ASCII values.
  * 
  * @param s_1 The first string.
  * @param s_2 The second string.
@@ -117,7 +119,6 @@ int	check_array_arrangment(char ***array, int _si)
 	}
 	return (1);
 }
-
 
 /** 
  * @brief Checks if the given string is a valid echo parameter.

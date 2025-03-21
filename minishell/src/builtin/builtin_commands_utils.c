@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_commands_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:40 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:11:29 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:41:17 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /** 
- * @brief Sets the new "PWD" (current working directory) value in the environment.
+ * @brief Sets the new "PWD" (current working directory)
+ *  value in the environment.
  * 
  * @param new_ The new directory path.
  * @param env The environment to update.
@@ -43,7 +44,6 @@ void	set_new_pwd_in_env(char *new_, t_env *env, int c)
 	unset_or_export_cmd(exp_pwd, env, NULL, &a);
 	free_string_array(exp_pwd);
 }
-
 
 /** 
  * @brief Changes the current working directory.
@@ -102,7 +102,8 @@ char	*get_current_working_directory(int size, int tries, int fd)
 }
 
 /** 
- * @brief Sorts a 2D array of strings based on the first element of each sub-array.
+ * @brief Sorts a 2D array of strings based on 
+ * the first element of each sub-array.
  * 
  * @param _array The 2D array to be sorted.
  * @param _si The size of the array.
@@ -134,9 +135,9 @@ char	***sort_array(char ***_array, int _si)
 	return (sort_array(_array, _si));
 }
 
-
 /** 
- * @brief Prints the environment variables in the export format to a file descriptor.
+ * @brief Prints the environment variables in 
+ * the export format to a file descriptor.
  * 
  * @param env The environment to print.
  * @param _out_fd The file descriptor to print to.
