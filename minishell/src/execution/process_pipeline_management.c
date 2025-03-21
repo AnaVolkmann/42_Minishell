@@ -6,18 +6,17 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:33 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/16 21:54:08 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 12:19:35 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief Manages file descriptors for child processes, handling input/output redirection.
+/** @brief Manages file descriptors for child processes, 
+ * handling input/output redirection.
  * @param pipe_data Array of pipe states and flags.
  * @param _fd File descriptors for input/output redirection.
- * @param fd_ Temporary file descriptors for the child process.
- */
+ * @param fd_ Temporary file descriptors for the child process.*/
 void	child_fds_managment(int *pipe_data, int *_fd, int *fd_)
 {
 	if (pipe_data[8] && pipe_data[6])
@@ -41,12 +40,11 @@ void	child_fds_managment(int *pipe_data, int *_fd, int *fd_)
 	safe_close(fd_[1]);
 }
 
-/**
- * @brief Manages file descriptors for parent processes after child execution.
+/** @brief Manages file descriptors for parent processes after
+ *  child execution.
  * @param pipe_data Array of pipe states and flags.
  * @param _fd File descriptors for input/output redirection.
- * @param fd_ Temporary file descriptors for the parent process.
- */
+ * @param fd_ Temporary file descriptors for the parent process.*/
 void	parent_fds_managment(int *pipe_data, int *_fd, int *fd_)
 {
 	if (pipe_data[8] && pipe_data[6])

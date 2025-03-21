@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:51:55 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/18 13:29:12 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:59:00 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief Processes the input string and tokenizes it.
+/** @brief Processes the input string and tokenizes it.
  * @param input The raw input string.
- * @return A list of tokens generated from the input, or NULL if there was a syntax error.
- * @details Trims whitespace characters from the input, checks for syntax errors, 
- *          and then tokenizes the cleaned input. Frees the original input string 
- *          after processing.
- */
+ * @return A list of tokens generated from the input,
+ * or NULL if there was a syntax error.
+ * @details Trims whitespace characters from the input,
+ *checks for syntax errors, 
+ *and then tokenizes the cleaned input. Frees the original input string 
+ *after processing.*/
 t_token	*process_and_tokenize_input(char *input)
 {
 	char		*trimmed_input;
@@ -39,13 +39,12 @@ t_token	*process_and_tokenize_input(char *input)
 	return (tokens);
 }
 
-/**
- * @brief Main loop for running the minishell program.
+/** @brief Main loop for running the minishell program.
  * @param env The environment variables for the shell.
- * @details Prompts the user for input, tokenizes the input, parses it into an AST,
- *          executes the command, and updates the environment status. Repeats until
- *          the user exits the shell.
- */
+ * @details Prompts the user for input, tokenizes the
+ *input, parses it into an AST,
+ *executes the command, and updates the environment status.
+  Repeats until the user exits the shell.*/
 void	run_minishell(t_env *env)
 {
 	char		*line;
@@ -75,15 +74,14 @@ void	run_minishell(t_env *env)
 	}
 }
 
-/**
- * @brief The entry point for the minishell program.
+/** @brief The entry point for the minishell program.
  * @param argc The number of arguments passed to the program.
  * @param argv The list of arguments passed to the program.
  * @param original_env The original environment variables.
  * @return 0 if the shell started successfully, or an error code.
- * @details Initializes the shell environment, sets up signal handlers, and starts
- *          the main minishell loop if the shell is running interactively.
- */
+ * @details Initializes the shell environment, sets up signal
+ *handlers, and starts the main minishell loop if the shell
+ * is running interactively.*/
 int	main(int argc, char **argv, char **original_env)
 {
 	t_env	*env;
