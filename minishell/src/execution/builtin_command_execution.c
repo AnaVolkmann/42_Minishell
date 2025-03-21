@@ -41,7 +41,9 @@ int	simple_child_for_builtins(t_ast_node *head, int *_fd, t_env *env, int *pipe_
 	int						_out_fd_[2];
 	int						status;
 
-	(pipe(fd_), pid = fork());
+	_out_fd_[1] = 1;
+	pipe(fd_);
+	pid = fork();
 	if (!pid)
 	{
 		if (pipe_data[0] && pipe_data[0] <= pipe_data[5])
@@ -51,7 +53,7 @@ int	simple_child_for_builtins(t_ast_node *head, int *_fd, t_env *env, int *pipe_
 		else
 			safe_close(_fd[0]);
 		close_pipe_ends(fd_[0], fd_[1]);
-		dup2(1, _out_fd_[1]);
+		dup2(_out_fd_[1], 1);
 		status = execute_builtin_command_in_child(head, env, _out_fd_, pipe_data);
 		exit(WEXITSTATUS(status));
 	}
