@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:48 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 18:25:24 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/22 13:03:47 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 	int				status;
 
 	status = 0;
-	if (_cmd_[1] && _cmd_[2])
+	if ((_cmd_[1] && !is_string_numeric(_cmd_[1])))
 	{
-		ft_putendl_fd("Minishell: exit: too many arguments.", 1);
-		status = 1;
+		ft_putendl_fd("Minishell: exit: numeric argument required.", 2);
+		status = 2;
 	}
-	else if (_cmd_[1] && !is_string_numeric(_cmd_[1]))
+	else if (_cmd_[1] && _cmd_[2])
 	{
-		ft_putendl_fd("Minishell: exit: numeric argument required.", 1);
-		status = 255;
+		ft_putendl_fd("Minishell: exit: too many arguments.", 2);
+		status = 1;
 	}
 	else if (_cmd_[1])
 		status = (ft_atoi(_cmd_[1]) % 256);
