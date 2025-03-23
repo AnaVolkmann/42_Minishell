@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_commands.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:51 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 12:47:37 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/23 16:42:41 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ char	**unset_or_export_cmd(char **cmd, t_env *env, int *_out_fd, int *s)
  * @param _out_fd Output file descriptor for printing.
  * @return 0 on success, 256 on failure.
  */
-int	ft_cd(char **cmd, t_env *env, int *_out_fd)
+/* int	ft_cd(char **cmd, t_env *env, int *_out_fd)
 {
 	int					a;
 	char				*new_path;
@@ -184,4 +184,32 @@ int	ft_cd(char **cmd, t_env *env, int *_out_fd)
 	if (new_path)
 		return (set_new_pwd_in_env(new_path, env, a), free(new_path), 0);
 	return (0);
+} */
+int	ft_cd(char **_cmd, t_env *env, int *_out_fd)
+{
+	int					a;
+	char				*new_path;
+
+	if (_cmd[1] && _cmd[2])
+		ft_putendl_fd("  err: cd(): Too many arguments", _out_fd[1]);
+	else
+	{
+		if (change_current_directory(_cmd[1], env) < 0)
+			ft_putendl_fd(
+				"  err: cd(): Only existing destinations", _out_fd[1]);
+		else
+		{
+			a = find_env_var_index(env, "PWD");
+			if (a >= 0)
+				remove_env_entry(env, a);
+			new_path = get_current_working_directory(100, 5, _out_fd[1]);
+			if (new_path)
+			{
+				set_new_pwd_in_env(new_path, env, a);
+				free(new_path);
+			}
+			return (0);
+		}
+	}
+	return (256);
 }
