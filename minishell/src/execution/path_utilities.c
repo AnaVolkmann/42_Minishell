@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:26 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 12:15:01 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 13:47:54 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,30 +118,54 @@ char	*get_file_path(char *file, char **envp, char *env_var, int mode)
  * @param index The current index for tracking substring extraction.
  * @return The extracted substring or NULL if an error occurs.
  */
-char	*find_next_substring(char *str, char del, int *index)
+char *find_next_substring(char *str, char del, int *index)
 {
-	char		*sub;
-	int			size;
-	int			a;
+    char *sub;
+    int size;
+    int a;
 
-	while (str[index[0]] && str[index[0]] == del)
-		index[0] += 1;
-	size = sizeof_str(str + index[0], del);
-	sub = malloc(size + 1);
-	if (!sub)
-		return (NULL);
-	a = 0;
-	while (str[index[0]]
-		&& str[index[0]] != del)
-	{
-		if (str[index[0]] != 34 && str[index[0]] != 39)
-			sub[a++] = str[index[0]];
-		index[0] += 1;
-	}
-	sub[a] = '\0';
-	index[0] += 1;
-	return (sub);
+    // Check if the string is empty or null
+    if (!str || !*str)
+    {
+        return NULL;
+    }
+
+    // Skip delimiters at the start
+    while (str[index[0]] && str[index[0]] == del)
+    {
+        index[0] += 1;
+    }
+
+    // Determine the size of the substring after the delimiter
+    size = sizeof_str(str + index[0], del);
+
+    // Allocate memory for the substring
+    sub = malloc(size + 1);  // +1 for the null terminator
+    if (!sub)
+    {
+        return NULL;  // Return NULL if malloc fails
+    }
+
+    // Initialize the memory to zero (optional, but safer)
+    memset(sub, 0, size + 1);
+
+    // Copy the substring into the allocated memory
+    a = 0;
+    while (str[index[0]] && str[index[0]] != del)
+    {
+        if (str[index[0]] != 34 && str[index[0]] != 39) // Skip quotes
+        {
+            sub[a++] = str[index[0]];
+        }
+        index[0] += 1;
+    }
+
+    sub[a] = '\0';  // Null-terminate the substring
+    index[0] += 1;  // Move index to the next part
+
+    return sub;
 }
+
 
 /**
  * @brief Prepares command arguments, resolving file paths using
