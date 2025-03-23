@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 12:43:55 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:45:32 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,35 @@ int	exec_cmd_w_redir(
 	parent_fds_managment(pipe_data, _fd, fd_);
 	return (1);
 }
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while ((s1[i] != '\0' || s2[i] != '\0'))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
+int check_if_command_is_builtin2(char *_cmd)
+{
+	char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};;
+	int	i;
+	
+	i = 0;
+	while (builtins[i] != NULL)
+	{
+		if (ft_strcmp(_cmd, builtins[i]) == 0)
+		{
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 /**
  * @brief Prepares command arguments and executes a built-in or external command.
@@ -116,7 +145,7 @@ t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 
 	f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
 	cmd_args = merge_command_args(f_args, head->args);
-	if (check_if_command_is_builtin(cmd_args[0]))
+	if (check_if_command_is_builtin2(cmd_args[0]))
 	{
 		if (ft_strncmp(cmd_args[0], "exit", 5) == 0 && !pipe_data[5])
 			free_string_array(cmd_args);

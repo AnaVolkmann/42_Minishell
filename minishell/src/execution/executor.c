@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 13:39:40 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:25:24 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,29 +136,6 @@ int	execute_ast_node(t_ast_node *head, int *pipe_data, t_env *env)
 		(safe_close(_fd[0]), safe_close(_fd[1]));
 	return (g_signal = 0, status);
 }
-int check_if_inside_quotes(char *s)
-{
-    if (s[0] == '"' || s[0] == '\'') {
-        int len = strlen(s);
-        if (s[len - 1] == '"' || s[len - 1] == '\'') {
-            return 1;  // Return true if it's wrapped in quotes
-        }
-    }
-    return 0;  // Return false if no wrapping quotes
-}
-
-
-char *strip_quotes(char *command)
-{
-    int len = strlen(command);
-    if (len >= 2 && (command[0] == '"' || command[0] == '\'') && 
-        (command[len - 1] == '"' || command[len - 1] == '\'')) {
-        command[len - 1] = '\0';  // Remove the last quote
-        command++;  // Move the pointer to the inside of the quotes
-    }
-    return command;
-}
-
 
 /** @brief Main entry point for executing commands in the AST.
  * Initializes pipe state, processes variables,
@@ -167,28 +144,17 @@ char *strip_quotes(char *command)
  * @param head AST node representing the root of the command structure.
  * @param env Environment variables and shell state.
  * @param status Pointer to store the final execution status.*/
-void command_executer(t_ast_node *head, t_env *env, int *status)
+void	command_executer(t_ast_node *head, t_env *env, int *status)
 {
-    int pipe_data[13];
-    int _status;
+	int	pipe_data[13];
+	int	_status;
 
-/*     char *command = strip_quotes(head->args[0]);
-    char *space_pos = strchr(command, ' ');
-    if (check_if_inside_quotes(head->args[0])) 
-    {
-        if (space_pos != NULL) 
-        {
-            *status = 0;  
-            return;
-        }
-    } */
-    initialize_or_reset_pipe_state(pipe_data, 1);
-    count_redirects_and_pipes(head, pipe_data);
-    initialize_or_reset_pipe_state(pipe_data, 0);
-    adjust_ast_nodes_for_execution(head);
-    expand_variables_in_ast(head, env);
-    _status = check_command_file_permissions(head, env->original_env);
-    if (!_status) {
-        *status = execute_ast_node(head, pipe_data, env);
-    }
+	initialize_or_reset_pipe_state(pipe_data, 1);
+	count_redirects_and_pipes(head, pipe_data);
+	initialize_or_reset_pipe_state(pipe_data, 0);
+	adjust_ast_nodes_for_execution(head);
+	expand_variables_in_ast(head, env);
+	_status = check_command_file_permissions(head, env->original_env);
+	if (!_status)
+		*status = execute_ast_node(head, pipe_data, env);
 }
