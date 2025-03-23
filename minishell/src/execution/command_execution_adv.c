@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 18:25:24 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 12:43:55 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ in a child process. Handles input/output redirection if piping is used.
  * @param pipe_data Pipe state information.
  * @return Returns 1 upon successful execution.
  */
-int	exec_cmd_basic(char **cmd, int *_fd, char **env, int *pipe_data)
+int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data)
 {
 	pid_t				pid;
 	int					fd_[2];
@@ -46,6 +46,10 @@ int	exec_cmd_basic(char **cmd, int *_fd, char **env, int *pipe_data)
 	signal(SIGQUIT, child_ctrl_c);
 	if (!pid)
 	{
+        if (!cmd[0] || cmd[0][0] == '\0')
+        {
+            cleanup_and_exit_shell(env, 0);
+        }
 		if (pipe_data[0] && pipe_data[0] <= pipe_data[5])
 			dup2(_fd[0], 0);
 		if (pipe_data[0] > 1)
@@ -53,7 +57,7 @@ int	exec_cmd_basic(char **cmd, int *_fd, char **env, int *pipe_data)
 		else
 			safe_close(_fd[0]);
 		close_pipe_ends(fd_[0], fd_[1]);
-		execve(cmd[0], cmd, env);
+		execve(cmd[0], cmd, env->original_env);
 		(ft_putendl_fd(strerror(errno), 2), exit(127));
 	}
 	close_pipe_ends(fd_[1], _fd[0]);
@@ -122,7 +126,7 @@ t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 	{
 		pipe_data[10] += 1;
 		if (!pipe_data[8])
-			stat = exec_cmd_basic(cmd_args, _fd, env->original_env, pipe_data);
+			stat = exec_cmd_basic(cmd_args, _fd, env, pipe_data);
 		else
 			stat = exec_cmd_w_redir(cmd_args,
 					_fd, env->original_env, pipe_data);
