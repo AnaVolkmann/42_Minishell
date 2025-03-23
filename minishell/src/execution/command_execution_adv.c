@@ -114,7 +114,7 @@ t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 	cmd_args = merge_command_args(f_args, head->args);
 	if (check_if_command_is_builtin(cmd_args[0]))
 	{
-		if (ft_strncmp(cmd_args[0], "exit", 5) == 0)
+		if (ft_strncmp(cmd_args[0], "exit", 5) == 0 && !pipe_data[5])
 			free_string_array(cmd_args);
 		stat = manage_builtin_execution(head, _fd, env, pipe_data);
 	}

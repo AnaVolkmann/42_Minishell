@@ -27,6 +27,7 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 	{
 		ft_putendl_fd("Minishell: exit: numeric argument required.", 2);
 		status = 2;
+		return ;
 	}
 	else if (_cmd_[1] && _cmd_[2])
 	{

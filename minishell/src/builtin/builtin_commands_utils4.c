@@ -17,7 +17,15 @@ void	unset_helper(char **cmd, t_env *env, int *s)
 	int			a;
 	int			c;
 
-	a = 1;
+	a = 0;
+	if (cmd[1][0] - '-' == 0)
+		return ;
+	else if (str_cmp(cmd[1], "ALL", NULL) == 1)
+	{
+		while (env->parsed_env[a] != 0)
+			remove_env_entry(env, a);
+		a++;
+	}
 	while (cmd[a])
 	{
 		c = find_env_var_index(env, cmd[a]);

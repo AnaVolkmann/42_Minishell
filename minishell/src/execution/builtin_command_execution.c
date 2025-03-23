@@ -119,10 +119,16 @@ int	execute_child_with_redirections(t_ast_node *head,
 int	is_string_numeric(char *s_1)
 {
 	int				a;
+	int				len;
 
 	a = 0;
+	len = ft_strlen(s_1);
+	if (len > 17)
+		return (0);
+	while (s_1[a] == ' ')
+		a++;
 	if (s_1[0] == '-' || s_1[0] == '+')
-		a = 1;
+		a++;
 	while (s_1[a])
 	{
 		if (!ft_isdigit(s_1[a]))
