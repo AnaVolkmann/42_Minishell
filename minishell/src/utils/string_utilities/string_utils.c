@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:12:49 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 13:51:16 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:52:14 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ char	*remove_quotes_from_str(char *str, int si_q_c, int do_q_c, int a)
 
 	b = 0;
 	new_str = malloc(sizeof_str(str, '\0') + 1);
-     if (!new_str)
-    {
-        return (NULL);
-    }
-    ft_memset(new_str, 0, sizeof_str(str, '\0') + 1);
+	if (!new_str)
+	{
+		return (NULL);
+	}
+	ft_memset(new_str, 0, sizeof_str(str, '\0') + 1);
 	while (str[a])
 	{
 		if (str[a] == 34 && !(si_q_c % 2))
@@ -49,7 +49,7 @@ char	*remove_quotes_from_str(char *str, int si_q_c, int do_q_c, int a)
 	}
 	new_str[b] = '\0';
 	free(str);
-    return (new_str);
+	return (new_str);
 }
 
 /** @brief Copies a string to a new dynamically allocated memory.

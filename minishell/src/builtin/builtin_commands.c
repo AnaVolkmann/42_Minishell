@@ -6,19 +6,17 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:51 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 16:42:41 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 16:52:49 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * @brief Handles the echo command, printing arguments 
+/** @brief Handles the echo command, printing arguments 
  * with or without a newline.
  * @param cmd The command arguments.
  * @param _out_fd Output file descriptor for printing.
- * @return 0 on success.
- */
+ * @return 0 on success.*/
 int	ft_echo(char **cmd, int *_out_fd)
 {
 	int		a;
@@ -159,44 +157,19 @@ char	**unset_or_export_cmd(char **cmd, t_env *env, int *_out_fd, int *s)
  * @param _cmd Command arguments.
  * @param env The environment.
  * @param _out_fd Output file descriptor for printing.
- * @return 0 on success, 256 on failure.
- */
-/* int	ft_cd(char **cmd, t_env *env, int *_out_fd)
-{
-	int					a;
-	char				*new_path;
-	char				*current_pwd;
-
-	new_path = handle_edge(cmd, env, _out_fd);
-	if (!new_path)
-		return (256);
-	current_pwd = get_current_working_directory(100, 5, _out_fd[1]);
-	if (change_current_directory(new_path, env) < 0)
-		return (free(current_pwd), free(new_path),
-			ft_putendl_fd("  err: cd(): No such file or directory",
-				_out_fd[1]), 256);
-	free(new_path);
-	set_old_pwd_in_env(current_pwd, env);
-	a = find_env_var_index(env, "PWD");
-	if (a >= 0)
-		remove_env_entry(env, a);
-	new_path = get_current_working_directory(100, 5, _out_fd[1]);
-	if (new_path)
-		return (set_new_pwd_in_env(new_path, env, a), free(new_path), 0);
-	return (0);
-} */
+ * @return 0 on success, 256 on failure.*/
 int	ft_cd(char **_cmd, t_env *env, int *_out_fd)
 {
 	int					a;
 	char				*new_path;
 
 	if (_cmd[1] && _cmd[2])
-		ft_putendl_fd("  err: cd(): Too many arguments", _out_fd[1]);
+		ft_putendl_fd("err: cd(): Too many arguments", _out_fd[1]);
 	else
 	{
 		if (change_current_directory(_cmd[1], env) < 0)
 			ft_putendl_fd(
-				"  err: cd(): Only existing destinations", _out_fd[1]);
+				"err: cd(): Only existing destinations", _out_fd[1]);
 		else
 		{
 			a = find_env_var_index(env, "PWD");

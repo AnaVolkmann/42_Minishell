@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 13:58:24 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:51:39 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int					g_signal;
  * @param env Environment variables and shell state.
  * @param fd File descriptors for piping.
  * @return Execution status of the pipeline.*/
-int	handle_piped_command_execution(
-		t_ast_node *head, int *pipe_data, t_env *env, int *_fd)
+int	handle_piped_command_execution(t_ast_node *head,
+	int *pipe_data, t_env *env, int *_fd)
 {
 	int				status;
 
@@ -70,15 +70,34 @@ int	handle_piped_command_execution(
  * @param env Environment variables and shell state.
  * @param fd File descriptors for redirection.
  * @return Status after processing redirection. */
-int	handle_command_redirection(
-		t_ast_node *head, int *pipe_data, t_env *env, int *_fd)
+int	handle_redirection_path(t_ast_node *head, t_env *env, int *pipe_data)
 {
-	int				status;
+	int		f_arr[3];
+	char	*expanded_path;
 
+	f_arr[0] = 0;
+	f_arr[1] = 0;
+	f_arr[2] = 0;
+	expanded_path = recursively_expand_variables
+		(head->right->args[0], env, 1, f_arr);
+	if (!expanded_path || expanded_path[0] == '\0')
+	{
+		ft_putendl_fd("Error: ambiguous redirect", 2);
+		return (1);
+	}
+	return (open_file_for_redirection(head->right, pipe_data, env, 0));
+}
+
+int	handle_command_redirection(t_ast_node *head,
+	int *pipe_data, t_env *env, int *_fd)
+{
+	int	status;
+
+	status = 0;
 	pipe_data[11] = 1;
 	if (head->right)
 	{
-		status = open_file_for_redirection(head->right, pipe_data, env, 0);
+		status = handle_redirection_path(head, env, pipe_data);
 		if ((status || !head->left) && pipe_data[0] > 1)
 			pipe_data[0] -= 1;
 	}
@@ -88,10 +107,9 @@ int	handle_command_redirection(
 		pipe_data[8] = 1;
 		status = prepare_and_execute_command(head->left, _fd, pipe_data, env);
 	}
-	if (head->left && head->left->type == T_PIPE
-		&& pipe_data[11])
-		status = handle_piped_command_execution(head->left,
-				pipe_data, env, _fd);
+	if (head->left && head->left->type == T_PIPE && pipe_data[11])
+		status = handle_piped_command_execution(head->left, pipe_data,
+				env, _fd);
 	if (head->left && (head->left->type == T_REDIR_IN
 			|| head->left->type == T_REDIR_OUT
 			|| head->left->type == T_REDIR_APPEND

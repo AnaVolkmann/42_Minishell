@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 16:36:55 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:59:19 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	exec_cmd_w_redir(
 	parent_fds_managment(pipe_data, _fd, fd_);
 	return (1);
 }
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
@@ -112,11 +113,13 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
-int check_if_command_is_builtin2(char *_cmd)
+
+/* int	check_if_command_is_builtin2(char *_cmd)
 {
-	char	*builtins[] = {"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};;
+	char	*builtins[] = {"echo", "cd", "pwd",
+		"export", "unset", "env", "exit", NULL};;
 	int	i;
-	
+
 	i = 0;
 	while (builtins[i] != NULL)
 	{
@@ -127,6 +130,26 @@ int check_if_command_is_builtin2(char *_cmd)
 		i++;
 	}
 	return (0);
+} */
+int	check_if_command_is_builtin2(char *_cmd)
+{
+	char	**builtins;
+	int		i;
+	int		status;
+
+	builtins = (char *[]){"echo", "cd",
+		"pwd", "export", "unset", "env", "exit", NULL};
+	if (!builtins)
+		return (0);
+	i = 0;
+	status = 0;
+	while (builtins[i] != NULL)
+	{
+		if (ft_strcmp(_cmd, builtins[i]) == 0)
+			status = 1;
+		i++;
+	}
+	return (status);
 }
 
 /**
@@ -166,32 +189,4 @@ t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 	if (pipe_data[0] > 1)
 		pipe_data[0] -= 1;
 	return (stat);
-}
-
-/**
- * @brief Waits for the child processes to finish and handles 
- * signals accordingly.
- * @param status The status code of the child process.
- * @param pipe_data Pipe state information.
- * @return The exit status of the last child process or a signal value.
- */
-int	wait_for_children(int status, int *pipe_data)
-{
-	if (status != 2 && status != 127
-		&& status != 126 && pipe_data[10]
-		&& pipe_data[11])
-	{
-		while (pipe_data[10])
-		{
-			wait(&status);
-			pipe_data[10] -= 1;
-		}
-		signal(SIGINT, handle_ctrl_c);
-		signal(SIGQUIT, SIG_IGN);
-		if (!g_signal)
-			return (WEXITSTATUS(status));
-		else
-			return (g_signal);
-	}
-	return (status);
 }
