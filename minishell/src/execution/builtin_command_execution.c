@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_command_execution.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:23:56 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/22 13:11:06 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 13:02:23 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	simple_child_for_builtins(t_ast_node *head,
 		dup2(_out_fd_[1], 1);
 		status = execute_builtin_command_in_child(head,
 				env, _out_fd_, pipe_data);
-		exit(WEXITSTATUS(status));
+		free_ast(head);
+		cleanup_and_exit_shell(env, status);
 	}
 	close_pipe_ends(fd_[1], _fd[0]);
 	if (pipe_data[0] > 1)

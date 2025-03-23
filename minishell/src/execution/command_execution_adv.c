@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_adv.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 12:43:55 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 13:15:37 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data)
 	signal(SIGQUIT, child_ctrl_c);
 	if (!pid)
 	{
-        if (!cmd[0] || cmd[0][0] == '\0')
-        {
-            cleanup_and_exit_shell(env, 0);
-        }
+		if (!cmd[0] || cmd[0][0] == '\0')
+			cleanup_and_exit_shell(env, 0);
 		if (pipe_data[0] && pipe_data[0] <= pipe_data[5])
 			dup2(_fd[0], 0);
 		if (pipe_data[0] > 1)
@@ -57,8 +55,12 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data)
 		else
 			safe_close(_fd[0]);
 		close_pipe_ends(fd_[0], fd_[1]);
-		execve(cmd[0], cmd, env->original_env);
-		(ft_putendl_fd(strerror(errno), 2), exit(127));
+		if (execve(cmd[0], cmd, env->original_env) < 0)
+		{
+			ft_putendl_fd("Command not found.", 2);
+			free_string_array(cmd);
+			cleanup_and_exit_shell(env, 127);
+		}
 	}
 	close_pipe_ends(fd_[1], _fd[0]);
 	if (pipe_data[0] > 1)
