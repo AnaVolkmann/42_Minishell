@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:26 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 12:15:01 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/23 14:48:18 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,21 +118,23 @@ char	*get_file_path(char *file, char **envp, char *env_var, int mode)
  * @param index The current index for tracking substring extraction.
  * @return The extracted substring or NULL if an error occurs.
  */
-char	*find_next_substring(char *str, char del, int *index)
+char *find_next_substring(char *str, char del, int *index)
 {
-	char		*sub;
-	int			size;
-	int			a;
+	char	*sub;
+	int		size;
+	int		a;
 
+	if (!str || !*str)
+		return (NULL);
 	while (str[index[0]] && str[index[0]] == del)
 		index[0] += 1;
 	size = sizeof_str(str + index[0], del);
 	sub = malloc(size + 1);
 	if (!sub)
-		return (NULL);
+		return NULL;
+	ft_memset(sub, 0, size + 1);
 	a = 0;
-	while (str[index[0]]
-		&& str[index[0]] != del)
+	while (str[index[0]] && str[index[0]] != del)
 	{
 		if (str[index[0]] != 34 && str[index[0]] != 39)
 			sub[a++] = str[index[0]];
@@ -142,6 +144,7 @@ char	*find_next_substring(char *str, char del, int *index)
 	index[0] += 1;
 	return (sub);
 }
+
 
 /**
  * @brief Prepares command arguments, resolving file paths using
