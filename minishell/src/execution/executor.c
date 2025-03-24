@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 17:51:39 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:52:18 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,10 @@ int	execute_ast_node(t_ast_node *head, int *pipe_data, t_env *env)
 
 	_fd[0] = -1;
 	_fd[1] = -1;
+	if (head->left)
+		head->left->parent = head;
+	if (head->right)
+		head->right->parent = head;
 	if (head->file_type == FILE_READY)
 	{
 		if (head->type == T_PIPE)

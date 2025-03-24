@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alawrence <alawrence@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:36 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 16:58:34 by alawrence        ###   ########.fr       */
+/*   Updated: 2025/03/24 14:53:27 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_ast_node
 	char				**args;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
+	struct s_ast_node	*parent;
 }	t_ast_node;
 
 /**************************envp*********************/
@@ -257,5 +258,6 @@ void		set_old_pwd_in_env(char *old, t_env *env);
 char		*get_env_value(t_env *env, char *key);
 char		*handle_edge(char **cmd, t_env *env, int *_out_fd);
 void		unset_helper(char **cmd, t_env *env, int *s);
+void		free_ast_child(t_ast_node *node);
 
 #endif

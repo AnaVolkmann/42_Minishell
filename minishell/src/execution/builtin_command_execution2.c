@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:10 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 13:13:00 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:56:06 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	execute_builtin_with_piping(t_ast_node *head,
 		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
-	return (status); // nao é aqui
+	return (status);
 }
 
 /**
@@ -85,7 +85,7 @@ int	execute_builtin_with_simple_piping(
 		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
-	return (status); // nao é aqui
+	return (status);
 }
 
 /**
@@ -109,7 +109,7 @@ int	manage_single_builtin_execution(
 		status = execute_builtin_with_piping(head, _fd, env, pipe_data);
 	else
 		status = execute_builtin_with_simple_piping(head, _fd, env, pipe_data);
-	return (status); // talvez seja aqui, mas dá double free
+	return (status);
 }
 
 /** @brief Executes a built-in command in the child process and exits.
@@ -124,6 +124,6 @@ void	exec_builtin_and_exit(t_ast_node *head,
 
 	status = execute_builtin_command_in_child(
 			head, env, _out_fd, pipe_data);
-	free_ast(head);
+	free_ast_child(head);
 	cleanup_and_exit_shell(env, status);
 }

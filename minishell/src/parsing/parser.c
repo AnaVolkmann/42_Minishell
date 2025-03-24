@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:18 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 12:13:54 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:54:18 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_ast_node	*create_file_node(t_token *token)
 	node->args[1] = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	node->parent = NULL;
 	free(token);
 	return (node);
 }

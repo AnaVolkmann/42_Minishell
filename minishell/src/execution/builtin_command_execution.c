@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_command_execution.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:23:56 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 16:16:55 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:56:41 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	simple_child_for_builtins(t_ast_node *head,
 		dup2(_out_fd_[1], 1);
 		status = execute_builtin_command_in_child(head,
 				env, _out_fd_, pipe_data);
-		free_ast(head);
+		free_ast_child(head);
 		cleanup_and_exit_shell(env, status);
 	}
 	close_pipe_ends(fd_[1], _fd[0]);
@@ -75,7 +75,7 @@ int	simple_child_for_builtins(t_ast_node *head,
 		_fd[0] = fd_[0];
 	else
 		safe_close(fd_[0]);
-	return (1); // nao é aqui
+	return (1);
 }
 
 /** @brief Executes a built-in command in a child process with
@@ -163,5 +163,5 @@ int	manage_builtin_execution(t_ast_node *head,
 	}
 	else
 		status = manage_single_builtin_execution(head, _fd, env, pipe_data);
-	return (status); // aqui nao e
+	return (status);
 }

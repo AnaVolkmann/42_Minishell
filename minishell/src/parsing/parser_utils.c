@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:12 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 12:14:14 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:48:39 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_ast_node	*new_ast_node(t_token_type type)
 	node->args = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	node->parent = NULL;
 	return (node);
 }
 
@@ -52,6 +53,20 @@ void	free_ast(t_ast_node *node)
 		}
 		free(node->args);
 	}
+	free_ast(node->left);
+	free_ast(node->right);
+	free(node);
+}
+
+void	free_ast_child(t_ast_node *node)
+{
+	int				i;
+
+	i = 0;
+	if (!node)
+		return ;
+	while (node->parent != NULL)
+		node = node->parent;
 	free_ast(node->left);
 	free_ast(node->right);
 	free(node);

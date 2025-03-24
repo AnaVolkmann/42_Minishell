@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_control.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:49 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 17:56:23 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:57:35 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,5 @@ int	execute_builtin_command_in_child(
 		status = ft_cd(head->args, env, _out_fd);
 	else if (str_cmp(head->args[0], "exit", NULL))
 		ft_exit(head->args, env, head);
-	return (status); // aqui nao e
+	return (status);
 }

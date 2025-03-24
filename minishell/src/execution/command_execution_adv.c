@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_adv.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 17:59:19 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:47:35 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data, t_ast_node 
 		{
 			ft_putendl_fd("Command not found.", 2);
 			free_string_array(cmd);
-			free_ast(head);
+			free_ast_child(head);
 			cleanup_and_exit_shell(env, 127);
 		}
 	}
@@ -81,7 +81,7 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data, t_ast_node 
  * @return Returns 1 upon successful execution.
  */
 int	exec_cmd_w_redir(
-		char **cmd, int *_fd, char **env, int *pipe_data, t_ast_node *head)
+		char **cmd, int *_fd, t_env *env, int *pipe_data, t_ast_node *head)
 {
 	pid_t				pid;
 	int					fd_[2];
@@ -93,10 +93,10 @@ int	exec_cmd_w_redir(
 	if (!pid)
 	{
 		child_fds_managment(pipe_data, _fd, fd_);
-		execve(cmd[0], cmd, env);
+		execve(cmd[0], cmd, env->original_env);
 		ft_putendl_fd(strerror(errno), 2);
-		free_ast(head);
-		exit(127);
+		free_ast_child(head);
+		cleanup_and_exit_shell(env, 127);
 	}
 	parent_fds_managment(pipe_data, _fd, fd_);
 	return (1);
@@ -170,25 +170,21 @@ t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 	char				**f_args;
 	int					stat;
 
-	f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
-	cmd_args = merge_command_args(f_args, head->args);
-	if (check_if_command_is_builtin2(cmd_args[0]))
-	{
-		// if (ft_strncmp(cmd_args[0], "exit", 5) == 0 && !pipe_data[5])
-		free_string_array(cmd_args);
+	if (check_if_command_is_builtin2(head->args[0]))
 		stat = manage_builtin_execution(head, _fd, env, pipe_data);
-	}
 	else
 	{
+		f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
+		cmd_args = merge_command_args(f_args, head->args);
 		pipe_data[10] += 1;
 		if (!pipe_data[8])
 			stat = exec_cmd_basic(cmd_args, _fd, env, pipe_data, head);
 		else
 			stat = exec_cmd_w_redir(cmd_args,
-					_fd, env->original_env, pipe_data, head);
+					_fd, env, pipe_data, head);
 		free_string_array(cmd_args);
 	}
 	if (pipe_data[0] > 1)
 		pipe_data[0] -= 1;
-	return (stat); // nao é aqui
+	return (stat);
 }
