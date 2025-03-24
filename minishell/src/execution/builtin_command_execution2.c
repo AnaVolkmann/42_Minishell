@@ -49,7 +49,7 @@ int	execute_builtin_with_piping(t_ast_node *head,
 		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
-	return (status);
+	return (status); // nao é aqui
 }
 
 /**
@@ -85,7 +85,7 @@ int	execute_builtin_with_simple_piping(
 		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
-	return (status);
+	return (status); // nao é aqui
 }
 
 /**
@@ -109,7 +109,7 @@ int	manage_single_builtin_execution(
 		status = execute_builtin_with_piping(head, _fd, env, pipe_data);
 	else
 		status = execute_builtin_with_simple_piping(head, _fd, env, pipe_data);
-	return (status);
+	return (status); // talvez seja aqui, mas dá double free
 }
 
 /** @brief Executes a built-in command in the child process and exits.

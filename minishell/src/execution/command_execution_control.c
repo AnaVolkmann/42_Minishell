@@ -146,5 +146,5 @@ int	execute_builtin_command_in_child(
 		status = ft_cd(head->args, env, _out_fd);
 	else if (str_cmp(head->args[0], "exit", NULL))
 		ft_exit(head->args, env, head);
-	return (status);
+	return (status); // aqui nao e
 }

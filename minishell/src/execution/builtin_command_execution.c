@@ -75,7 +75,7 @@ int	simple_child_for_builtins(t_ast_node *head,
 		_fd[0] = fd_[0];
 	else
 		safe_close(fd_[0]);
-	return (1);
+	return (1); // nao é aqui
 }
 
 /** @brief Executes a built-in command in a child process with
@@ -111,6 +111,7 @@ int	execute_child_with_redirections(t_ast_node *head,
 		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
+	free_ast(head);
 	return (1);
 }
 
@@ -162,5 +163,5 @@ int	manage_builtin_execution(t_ast_node *head,
 	}
 	else
 		status = manage_single_builtin_execution(head, _fd, env, pipe_data);
-	return (status);
+	return (status); // aqui nao e
 }

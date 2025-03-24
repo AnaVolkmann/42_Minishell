@@ -35,7 +35,7 @@ in a child process. Handles input/output redirection if piping is used.
  * @param pipe_data Pipe state information.
  * @return Returns 1 upon successful execution.
  */
-int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data)
+int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data, t_ast_node *head)
 {
 	pid_t				pid;
 	int					fd_[2];
@@ -59,6 +59,7 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data)
 		{
 			ft_putendl_fd("Command not found.", 2);
 			free_string_array(cmd);
+			free_ast(head);
 			cleanup_and_exit_shell(env, 127);
 		}
 	}
@@ -80,7 +81,7 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data)
  * @return Returns 1 upon successful execution.
  */
 int	exec_cmd_w_redir(
-		char **cmd, int *_fd, char **env, int *pipe_data)
+		char **cmd, int *_fd, char **env, int *pipe_data, t_ast_node *head)
 {
 	pid_t				pid;
 	int					fd_[2];
@@ -94,6 +95,7 @@ int	exec_cmd_w_redir(
 		child_fds_managment(pipe_data, _fd, fd_);
 		execve(cmd[0], cmd, env);
 		ft_putendl_fd(strerror(errno), 2);
+		free_ast(head);
 		exit(127);
 	}
 	parent_fds_managment(pipe_data, _fd, fd_);
@@ -172,21 +174,21 @@ t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 	cmd_args = merge_command_args(f_args, head->args);
 	if (check_if_command_is_builtin2(cmd_args[0]))
 	{
-		if (ft_strncmp(cmd_args[0], "exit", 5) == 0 && !pipe_data[5])
-			free_string_array(cmd_args);
+		// if (ft_strncmp(cmd_args[0], "exit", 5) == 0 && !pipe_data[5])
+		free_string_array(cmd_args);
 		stat = manage_builtin_execution(head, _fd, env, pipe_data);
 	}
 	else
 	{
 		pipe_data[10] += 1;
 		if (!pipe_data[8])
-			stat = exec_cmd_basic(cmd_args, _fd, env, pipe_data);
+			stat = exec_cmd_basic(cmd_args, _fd, env, pipe_data, head);
 		else
 			stat = exec_cmd_w_redir(cmd_args,
-					_fd, env->original_env, pipe_data);
+					_fd, env->original_env, pipe_data, head);
+		free_string_array(cmd_args);
 	}
-	free_string_array(cmd_args);
 	if (pipe_data[0] > 1)
 		pipe_data[0] -= 1;
-	return (stat);
+	return (stat); // nao é aqui
 }

@@ -32,9 +32,7 @@ char	*remove_quotes_from_str(char *str, int si_q_c, int do_q_c, int a)
 	b = 0;
 	new_str = malloc(sizeof_str(str, '\0') + 1);
 	if (!new_str)
-	{
 		return (NULL);
-	}
 	ft_memset(new_str, 0, sizeof_str(str, '\0') + 1);
 	while (str[a])
 	{

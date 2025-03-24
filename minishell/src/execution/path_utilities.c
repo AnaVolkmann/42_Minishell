@@ -41,8 +41,13 @@ char	*create_subpath_from_var(char *env_var, char *file, int *indx_s)
 			&& env_var[indx_s[1] - 1] != '/'
 			&& (b == indx_s[1] - a))
 			tmp_path[b] = '/';
-		else
-			tmp_path[b] = file[b - (indx_s[1] - a) - indx_s[3]];
+			else
+			{
+				if (b - (indx_s[1] - a) - indx_s[3] >= 0 && b - (indx_s[1] - a) - indx_s[3] < file_size)
+					tmp_path[b] = file[b - (indx_s[1] - a) - indx_s[3]];
+				else
+					tmp_path[b] = '\0'; 
+			}
 		b++;
 	}
 	tmp_path[b] = '\0';
