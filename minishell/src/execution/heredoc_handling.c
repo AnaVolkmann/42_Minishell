@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:22 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 13:15:10 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:14:44 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	exec_here_doc(char *limiter, int *pipe_data, t_env *env)
 	pipe_data[1] = _out_fd_[0];
 	pipe_data[9] = (WEXITSTATUS(status)) - 1;
 	if (pipe_data[9] < 0)
-		pipe_data[9] += 2;
+		pipe_data[9] += 1;
 	pipe_data[11] = status;
 	return (pipe_data[9]);
 }
