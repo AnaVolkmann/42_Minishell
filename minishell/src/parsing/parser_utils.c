@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:12 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 15:48:39 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:40:57 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,22 @@ void	free_ast(t_ast_node *node)
 
 void	free_ast_child(t_ast_node *node)
 {
-	int				i;
+	int	i;
 
 	i = 0;
 	if (!node)
 		return ;
 	while (node->parent != NULL)
 		node = node->parent;
+	if (node->type == T_WORD && node->args)
+	{
+		while (node->args && node->args[i])
+		{
+			free(node->args[i]);
+			i++;
+		}
+		free(node->args);
+	}
 	free_ast(node->left);
 	free_ast(node->right);
 	free(node);

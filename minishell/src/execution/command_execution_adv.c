@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 15:47:35 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:37:22 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,12 +170,15 @@ t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 	char				**f_args;
 	int					stat;
 
-	if (check_if_command_is_builtin2(head->args[0]))
+	f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
+	cmd_args = merge_command_args(f_args, head->args);
+	if (check_if_command_is_builtin2(cmd_args[0]))
+	{
+		free_string_array(cmd_args);
 		stat = manage_builtin_execution(head, _fd, env, pipe_data);
+	}
 	else
 	{
-		f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
-		cmd_args = merge_command_args(f_args, head->args);
 		pipe_data[10] += 1;
 		if (!pipe_data[8])
 			stat = exec_cmd_basic(cmd_args, _fd, env, pipe_data, head);
