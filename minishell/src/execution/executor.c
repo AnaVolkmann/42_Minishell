@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 15:52:18 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:31:48 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,4 +179,5 @@ void	command_executer(t_ast_node *head, t_env *env, int *status)
 	_status = check_command_file_permissions(head, env->original_env);
 	if (!_status)
 		*status = execute_ast_node(head, pipe_data, env);
+
 }

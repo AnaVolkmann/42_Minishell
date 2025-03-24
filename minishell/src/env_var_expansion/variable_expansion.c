@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:23:33 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/23 13:49:03 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:23:46 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*recursively_expand_variables(char *var,
 		{
 			new_var = expand_variable_in_string(var, env, f_arr[0], &f_arr[0]);
 			if (new_var && new_var[0] == '\0')
-				return (ft_strdup(""));
+				return (free(new_var), ft_strdup(""));
 			return (recursively_expand_variables(new_var, env, __con, f_arr));
 		}
 		f_arr[0]++;
