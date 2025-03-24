@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 16:37:22 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:06:50 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data, t_ast_node 
 	if (!pid)
 	{
 		if (!cmd[0] || cmd[0][0] == '\0')
+		{
+			free_string_array(cmd);
+			free_ast_child(head);
 			cleanup_and_exit_shell(env, 0);
+		}
 		if (pipe_data[0] && pipe_data[0] <= pipe_data[5])
 			dup2(_fd[0], 0);
 		if (pipe_data[0] > 1)
