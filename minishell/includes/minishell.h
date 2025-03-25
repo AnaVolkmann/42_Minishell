@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:36 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 11:55:45 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:18:04 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int			handle_command_redirection(t_ast_node *head, int *piped,
 				t_env *env, int *fd);
 int			handle_piped_command_execution(t_ast_node *head,
 				int *piped, t_env *env, int *fd);
-int			exec_here_doc(char *limiter, int *piped, t_env *env);
+int			exec_here_doc(t_ast_node *limiter, int *piped, t_env *env);
 void		initialize_or_reset_pipe_state(int *piped, int flag);
 int			open_file_for_redirection(
 				t_ast_node *head, int *piped, t_env *env, int status);

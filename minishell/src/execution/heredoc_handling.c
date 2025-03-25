@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:22 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 12:14:44 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:07:05 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	read_and_write(int std_out, char *limiter, t_env *env,
  * @param pipe_data Array used for managing file descriptors for piping.
  * @param env The environment structure for variable expansion.
  * @return The status of the here-doc process.*/
-int	exec_here_doc(char *limiter, int *pipe_data, t_env *env)
+int	exec_here_doc(t_ast_node *limiter, int *pipe_data, t_env *env)
 {
 	int							_out_fd_[2];
 	pid_t						pid;
@@ -116,9 +116,9 @@ int	exec_here_doc(char *limiter, int *pipe_data, t_env *env)
 	{
 		signal(SIGINT, quite_heredoc);
 		safe_close(_out_fd_[0]);
-		read_and_write(_out_fd_[1], limiter, env,
-			is_there_any_quotes(limiter));
-		exit(1);
+		read_and_write(_out_fd_[1], limiter->args[0], env,
+			is_there_any_quotes(limiter->args[0]));
+		cleanup_and_exit_shell(env, 1);
 	}
 	waitpid(pid, &status, 0);
 	safe_close(_out_fd_[1]);
