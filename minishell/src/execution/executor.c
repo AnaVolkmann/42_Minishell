@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 12:18:50 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:09:18 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int	handle_command_redirection(t_ast_node *head,
 	pipe_data[11] = 1;
 	if (head->right)
 	{
-		status = handle_redirection_path(head, env, pipe_data);
+		//status = handle_redirection_path(head, env, pipe_data);
+        status = open_file_for_redirection(head->right, pipe_data, env, 0);
 		if ((status || !head->left) && pipe_data[0] > 1)
 			pipe_data[0] -= 1;
 	}

@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:22 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 12:07:05 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:22:22 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	exec_here_doc(t_ast_node *limiter, int *pipe_data, t_env *env)
 		safe_close(_out_fd_[0]);
 		read_and_write(_out_fd_[1], limiter->args[0], env,
 			is_there_any_quotes(limiter->args[0]));
+        free_ast_child(limiter);
 		cleanup_and_exit_shell(env, 1);
 	}
 	waitpid(pid, &status, 0);
