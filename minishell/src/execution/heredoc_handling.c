@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_handling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:22 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 13:41:24 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:20:23 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,19 @@ int	is_there_any_quotes(char *s)
  * @param env The environment structure used for variable expansion.
  * @param is_expandable Flag indicating whether variable expansion 
  * should occur.*/
-void	read_and_write(int std_out, char *limiter, t_env *env,
+void	read_and_write(int std_out, t_ast_node *limiter, t_env *env,
 					int is_expandable)
 {
 	char							*buf;
 	int								f_arr[3];
 
-	limiter = remove_quotes_from_str(limiter, 0, 0, 0);
+	limiter->args[0] = remove_quotes_from_str(limiter->args[0], 0, 0, 0);
 	while (1)
 	{
 		buf = readline(">> ");
-		if (!buf || str_compare(limiter, buf, sizeof_str(buf, '\n')))
+		if (!buf || str_compare(limiter->args[0], buf, sizeof_str(buf, '\n')))
 		{
+			free_ast_child(limiter);
 			free(buf);
 			break ;
 		}
@@ -94,7 +95,6 @@ void	read_and_write(int std_out, char *limiter, t_env *env,
 		write(std_out, "\n", 1);
 		free(buf);
 	}
-	free(limiter);
 }
 
 /** @brief Handles reading input for a here-document and writes
@@ -116,7 +116,7 @@ int	exec_here_doc(t_ast_node *limiter, int *pipe_data, t_env *env)
 	{
 		signal(SIGINT, quite_heredoc);
 		safe_close(_out_fd_[0]);
-		read_and_write(_out_fd_[1], limiter->args[0], env,
+		read_and_write(_out_fd_[1], limiter, env,
 			is_there_any_quotes(limiter->args[0]));
 		cleanup_and_exit_shell(env, 1);
 	}
