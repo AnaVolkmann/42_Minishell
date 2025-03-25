@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_command_execution.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:23:56 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 13:13:24 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:31:30 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ int	execute_child_with_redirections(t_ast_node *head,
 		safe_close(_out_fd[1]);
 		_fd[0] = _out_fd[0];
 	}
-	//free_ast(head);
 	return (1);
 }
 

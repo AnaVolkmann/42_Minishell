@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:12 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 11:42:28 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:42:46 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_ast_node	*new_ast_node(t_token_type type)
 	node->left = NULL;
 	node->right = NULL;
 	node->parent = NULL;
+	node->cmd = NULL;
 	return (node);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_commands_utils4.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:45:59 by lufiguei          #+#    #+#             */
-/*   Updated: 2025/03/25 12:24:38 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:29:25 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,21 @@ void	set_parent(t_ast_node *head)
 		head->left->parent = head;
 	if (head->right)
 		head->right->parent = head;
+}
+
+void	exec_error(t_ast_node *head, t_env *env, int flag)
+{
+	if (flag == 0)
+	{
+		free_string_array(head->cmd);
+		free_ast_child(head);
+		cleanup_and_exit_shell(env, 0);
+	}
+	else
+	{
+		ft_putendl_fd("Command not found.", 2);
+		free_string_array(head->cmd);
+		free_ast_child(head);
+		cleanup_and_exit_shell(env, 127);
+	}
 }

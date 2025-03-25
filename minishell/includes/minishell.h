@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:36 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 12:18:04 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:46:10 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_ast_node
 	t_token_type		type;
 	int					file_type;
 	char				**args;
+	char				**cmd;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*parent;
@@ -260,5 +261,6 @@ char		*handle_edge(char **cmd, t_env *env, int *_out_fd);
 void		unset_helper(char **cmd, t_env *env, int *s);
 void		free_ast_child(t_ast_node *node);
 void		set_parent(t_ast_node *head);
+void		exec_error(t_ast_node *head, t_env *env, int flag);
 
 #endif

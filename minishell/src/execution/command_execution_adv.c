@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 11:38:46 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:45:55 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ in a child process. Handles input/output redirection if piping is used.
  * @param pipe_data Pipe state information.
  * @return Returns 1 upon successful execution.
  */
-int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data,
+int	exec_cmd_basic(int *_fd, t_env *env, int *pipe_data,
 		t_ast_node *head)
 {
 	pid_t				pid;
@@ -47,12 +47,8 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data,
 	signal(SIGQUIT, child_ctrl_c);
 	if (!pid)
 	{
-		if (!cmd[0] || cmd[0][0] == '\0')
-		{
-			free_string_array(cmd);
-			free_ast_child(head);
-			cleanup_and_exit_shell(env, 0);
-		}
+		if (!head->cmd[0] || head->cmd[0][0] == '\0')
+			exec_error(head, env, 0);
 		if (pipe_data[0] && pipe_data[0] <= pipe_data[5])
 			dup2(_fd[0], 0);
 		if (pipe_data[0] > 1)
@@ -60,13 +56,8 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data,
 		else
 			safe_close(_fd[0]);
 		close_pipe_ends(fd_[0], fd_[1]);
-		if (execve(cmd[0], cmd, env->original_env) < 0)
-		{
-			ft_putendl_fd("Command not found.", 2);
-			free_string_array(cmd);
-			free_ast_child(head);
-			cleanup_and_exit_shell(env, 127);
-		}
+		if (execve(head->cmd[0], head->cmd, env->original_env) < 0)
+			exec_error(head, env, 1);
 	}
 	close_pipe_ends(fd_[1], _fd[0]);
 	if (pipe_data[0] > 1)
@@ -85,8 +76,7 @@ int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data,
  * @param pipe_data Pipe state information.
  * @return Returns 1 upon successful execution.
  */
-int	exec_cmd_w_redir(
-		char **cmd, int *_fd, t_env *env, int *pipe_data, t_ast_node *head)
+int	exec_cmd_w_redir(int *_fd, t_env *env, int *pipe_data, t_ast_node *head)
 {
 	pid_t				pid;
 	int					fd_[2];
@@ -98,7 +88,7 @@ int	exec_cmd_w_redir(
 	if (!pid)
 	{
 		child_fds_managment(pipe_data, _fd, fd_);
-		execve(cmd[0], cmd, env->original_env);
+		execve(head->cmd[0], head->cmd, env->original_env);
 		ft_putendl_fd(strerror(errno), 2);
 		free_ast_child(head);
 		cleanup_and_exit_shell(env, 127);
@@ -171,26 +161,24 @@ int	check_if_command_is_builtin2(char *_cmd)
 int	prepare_and_execute_command(
 t_ast_node *head, int *_fd, int *pipe_data, t_env *env)
 {
-	char				**cmd_args;
 	char				**f_args;
 	int					stat;
 
 	f_args = prepare_cmd_arguments(head->args[0], env->original_env, 0);
-	cmd_args = merge_command_args(f_args, head->args);
-	if (check_if_command_is_builtin2(cmd_args[0]))
+	head->cmd = merge_command_args(f_args, head->args);
+	if (check_if_command_is_builtin2(head->cmd[0]))
 	{
-		free_string_array(cmd_args);
+		free_string_array(head->cmd);
 		stat = manage_builtin_execution(head, _fd, env, pipe_data);
 	}
 	else
 	{
 		pipe_data[10] += 1;
 		if (!pipe_data[8])
-			stat = exec_cmd_basic(cmd_args, _fd, env, pipe_data, head);
+			stat = exec_cmd_basic(_fd, env, pipe_data, head);
 		else
-			stat = exec_cmd_w_redir(cmd_args,
-					_fd, env, pipe_data, head);
-		free_string_array(cmd_args);
+			stat = exec_cmd_w_redir(_fd, env, pipe_data, head);
+		free_string_array(head->cmd);
 	}
 	if (pipe_data[0] > 1)
 		pipe_data[0] -= 1;
