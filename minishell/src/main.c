@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:51:55 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/21 11:59:00 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:35:10 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int	main(int argc, char **argv, char **original_env)
 		run_minishell(env);
 		cleanup_and_exit_shell(env, 0);
 	}
+    free(env);
 	return (0);
 }
