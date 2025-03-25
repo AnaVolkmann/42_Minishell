@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_control.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:49 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 15:57:35 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:05:19 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	open_file_for_redirection(
 	else if (head->file_type == READ_FROM_APPEND)
 	{
 		switch_fds_identifier(pipe_data, 6, 1, 1);
-		status = exec_here_doc(head->args[0], pipe_data, env);
+		status = exec_here_doc(head, pipe_data, env);
 		signal(SIGINT, handle_ctrl_c);
 	}
 	else

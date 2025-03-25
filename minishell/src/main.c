@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:51:55 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 11:35:10 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:02:34 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	run_minishell(t_env *env)
 		{
 			ast = parse_tokens(&tokens);
 			command_executer(ast, env, &status);
-			free_ast(ast);
+			free_ast_child(ast);
 		}
 		update_env_status(env, status, "?=");
 	}
