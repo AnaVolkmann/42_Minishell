@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_adv.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 22:01:55 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:38:46 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ in a child process. Handles input/output redirection if piping is used.
  * @param pipe_data Pipe state information.
  * @return Returns 1 upon successful execution.
  */
-int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data, t_ast_node *head)
+int	exec_cmd_basic(char **cmd, int *_fd, t_env *env, int *pipe_data,
+		t_ast_node *head)
 {
 	pid_t				pid;
 	int					fd_[2];

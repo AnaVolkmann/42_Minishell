@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:45:59 by lufiguei          #+#    #+#             */
-/*   Updated: 2025/03/21 12:47:31 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:55:55 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,37 @@ char	*handle_edge(char **cmd, t_env *env, int *_out_fd)
 	else
 		new_path = ft_strdup(cmd[1]);
 	return (new_path);
+}
+
+void	free_ast_child(t_ast_node *node)
+{
+	int	i;
+
+	i = 0;
+	if (!node)
+		return ;
+	while (node->parent != NULL)
+		node = node->parent;
+	if (node->type == T_WORD && node->args)
+	{
+		while (node->args && node->args[i])
+		{
+			free(node->args[i]);
+			i++;
+		}
+		free(node->args);
+	}
+	free_ast(node->left);
+	free_ast(node->right);
+	free(node);
+}
+
+void	set_parent(t_ast_node *head)
+{
+	if (!head)
+		return ;
+	if (head->left)
+		head->left->parent = head;
+	if (head->right)
+		head->right->parent = head;
 }

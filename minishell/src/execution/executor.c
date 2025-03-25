@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 11:10:44 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:56:12 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	handle_redirection_path(t_ast_node *head, t_env *env, int *pipe_data)
 	if (!expanded_path || expanded_path[0] == '\0')
 	{
 		ft_putendl_fd("Error: ambiguous redirect", 2);
-        return (1);
+		return (1);
 	}
 	return (open_file_for_redirection(head->right, pipe_data, env, 0));
 }
@@ -133,10 +133,7 @@ int	execute_ast_node(t_ast_node *head, int *pipe_data, t_env *env)
 
 	_fd[0] = -1;
 	_fd[1] = -1;
-	if (head->left)
-		head->left->parent = head;
-	if (head->right)
-		head->right->parent = head;
+	set_parent(head);
 	if (head->file_type == FILE_READY)
 	{
 		if (head->type == T_PIPE)
@@ -154,8 +151,7 @@ int	execute_ast_node(t_ast_node *head, int *pipe_data, t_env *env)
 		safe_close(pipe_data[1]);
 	if (pipe_data[7])
 		safe_close(pipe_data[2]);
-	if (_fd[0] != -1 || _fd[1] != -1)
-		(safe_close(_fd[0]), safe_close(_fd[1]));
+	close_pipe_ends(_fd[0], _fd[1]);
 	return (g_signal = 0, status);
 }
 
@@ -179,5 +175,4 @@ void	command_executer(t_ast_node *head, t_env *env, int *status)
 	_status = check_command_file_permissions(head, env->original_env);
 	if (!_status)
 		*status = execute_ast_node(head, pipe_data, env);
-
 }

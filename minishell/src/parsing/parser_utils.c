@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:06:12 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 11:29:14 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:42:28 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,6 @@ void	free_ast(t_ast_node *node)
 	i = 0;
 	if (!node)
 		return ;
-	if (node->type == T_WORD && node->args)
-	{
-		while (node->args && node->args[i])
-		{
-			free(node->args[i]);
-			i++;
-		}
-		free(node->args);
-	}
-	free_ast(node->left);
-	free_ast(node->right);
-	free(node);
-}
-
-void	free_ast_child(t_ast_node *node)
-{
-	int	i;
-
-	i = 0;
-	if (!node)
-		return ;
-	while (node->parent != NULL)
-		node = node->parent;
 	if (node->type == T_WORD && node->args)
 	{
 		while (node->args && node->args[i])

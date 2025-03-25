@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_commands_utils3.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:48 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/22 13:03:47 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:41:05 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 	}
 	else if (_cmd_[1])
 		status = (ft_atoi(_cmd_[1]) % 256);
-	free_ast(head);
+	free_ast_child(head);
 	cleanup_and_exit_shell(env, status);
 }
 

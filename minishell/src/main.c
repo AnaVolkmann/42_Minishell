@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:51:55 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 11:35:10 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:36:50 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ int	main(int argc, char **argv, char **original_env)
 		run_minishell(env);
 		cleanup_and_exit_shell(env, 0);
 	}
-    free(env);
+	free(env);
 	return (0);
 }

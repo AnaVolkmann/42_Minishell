@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:12:35 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 11:34:23 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:37:55 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,9 @@ char	*replace_variable_with_value(
 	s_strcopy(new__ + st, __new, 0, unsize);
 	s_strcopy(new__ + st + unsize, old_var, end, sizeof_str(old_var, '\0'));
 	if (old_var != NULL)
-    {
-        free(old_var);
-        old_var = NULL;  // Evita double free
-    }
+	{
+		free(old_var);
+		old_var = NULL;
+	}
 	return (new__);
 }
