@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:23:33 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 17:23:46 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:16:40 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*recursively_expand_variables(char *var,
 
 	if (var == NULL || var[0] == '\0' || (var[0] == '$'
 			&& (var[1] == '"' || var[1] == '\'')))
-		return (ft_strdup(""));
+		return (var);
 	if (var[0] == '$' && var[1] == '$')
 		return (ft_strdup(ft_itoa(getpid())));
 	while (var[f_arr[0]])

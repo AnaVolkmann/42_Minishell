@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/24 17:31:48 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:10:44 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	handle_redirection_path(t_ast_node *head, t_env *env, int *pipe_data)
 	if (!expanded_path || expanded_path[0] == '\0')
 	{
 		ft_putendl_fd("Error: ambiguous redirect", 2);
-		return (1);
+        return (1);
 	}
 	return (open_file_for_redirection(head->right, pipe_data, env, 0));
 }
