@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_commands_utils4.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:45:59 by lufiguei          #+#    #+#             */
-/*   Updated: 2025/03/26 11:25:37 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:29:47 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,22 @@ void	exec_error(t_ast_node *head, t_env *env, int flag)
 	}
 }
 
-void set_root(t_ast_node *head)
+void	set_root(t_ast_node *head)
 {
 	if (!head)
-		return;
-
-	if (!head->root) {
+		return ;
+	if (!head->root)
+	{
 		head->root = head;
 	}
-	if (head->left) {
+	if (head->left)
+	{
 		head->left->root = head->root;
 		set_root(head->left);
 	}
-	if (head->right) {
-	head->right->root = head->root;
-	set_root(head->right);
+	if (head->right)
+	{
+		head->right->root = head->root;
+		set_root(head->right);
 	}
 }
-

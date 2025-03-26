@@ -6,7 +6,7 @@
 /*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:26 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 10:51:36 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:48:51 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,7 @@ char	*create_subpath_from_var(char *env_var, char *file, int *indx_s)
 			&& (b == indx_s[1] - a))
 			tmp_path[b] = '/';
 		else
-		{
-			if (b - (indx_s[1] - a) - indx_s[3] >= 0 && b - (indx_s[1] - a) - indx_s[3] < file_size)
-				tmp_path[b] = file[b - (indx_s[1] - a) - indx_s[3]];
-			else
-				tmp_path[b] = '\0';
-		}
+			tmp_path[b] = file[b - (indx_s[1] - a) - indx_s[3]];
 		b++;
 	}
 	tmp_path[b] = '\0';

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution_adv.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/26 11:14:48 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:31:18 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	exec_cmd_basic(int *_fd, t_env *env, int *pipe_data,
 	signal(SIGQUIT, child_ctrl_c);
 	if (!pid)
 	{
-		if (!head->cmd[0] || head->cmd[0][0] == '\0')
-			exec_error(head, env, 0);
 		if (pipe_data[0] && pipe_data[0] <= pipe_data[5])
 			dup2(_fd[0], 0);
 		if (pipe_data[0] > 1)
@@ -111,23 +109,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-/* int	check_if_command_is_builtin2(char *_cmd)
-{
-	char	*builtins[] = {"echo", "cd", "pwd",
-		"export", "unset", "env", "exit", NULL};;
-	int	i;
-
-	i = 0;
-	while (builtins[i] != NULL)
-	{
-		if (ft_strcmp(_cmd, builtins[i]) == 0)
-		{
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-} */
 int	check_if_command_is_builtin2(char *_cmd)
 {
 	char	**builtins;

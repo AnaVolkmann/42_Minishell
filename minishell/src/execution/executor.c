@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/26 11:23:47 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:33:04 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ void	command_executer(t_ast_node *head, t_env *env, int *status)
 	int	pipe_data[13];
 	int	_status;
 
+	set_root(head);
 	initialize_or_reset_pipe_state(pipe_data, 1);
 	count_redirects_and_pipes(head, pipe_data);
 	initialize_or_reset_pipe_state(pipe_data, 0);

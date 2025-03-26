@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:51:55 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/26 11:20:47 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:33:04 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	run_minishell(t_env *env)
 		if (!status)
 		{
 			ast = parse_tokens(&tokens);
-			set_root(ast);
 			command_executer(ast, env, &status);
 			free_ast(ast->root);
 		}

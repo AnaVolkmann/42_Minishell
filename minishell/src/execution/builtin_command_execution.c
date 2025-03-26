@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_command_execution.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:23:56 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/26 11:24:15 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:30:18 by ana-lda-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ int	is_string_numeric(char *s_1)
 	}
 	return (1);
 }
-
 
 /** @brief Manages the execution of built-in commands, including 
  * handling piping and redirection.
