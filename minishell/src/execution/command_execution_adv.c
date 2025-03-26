@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:03 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 15:45:55 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:14:48 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	exec_cmd_w_redir(int *_fd, t_env *env, int *pipe_data, t_ast_node *head)
 		child_fds_managment(pipe_data, _fd, fd_);
 		execve(head->cmd[0], head->cmd, env->original_env);
 		ft_putendl_fd(strerror(errno), 2);
-		free_ast_child(head);
+		free_ast(head->root);
 		cleanup_and_exit_shell(env, 127);
 	}
 	parent_fds_managment(pipe_data, _fd, fd_);

@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:23:56 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 15:31:30 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:24:15 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	simple_child_for_builtins(t_ast_node *head,
 		dup2(_out_fd_[1], 1);
 		status = execute_builtin_command_in_child(head,
 				env, _out_fd_, pipe_data);
-		free_ast_child(head);
+		free_ast(head->root);
 		cleanup_and_exit_shell(env, status);
 	}
 	close_pipe_ends(fd_[1], _fd[0]);
@@ -138,6 +138,7 @@ int	is_string_numeric(char *s_1)
 	}
 	return (1);
 }
+
 
 /** @brief Manages the execution of built-in commands, including 
  * handling piping and redirection.

@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:22 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 16:29:47 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 10:50:44 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	read_and_write(int std_out, t_ast_node *limiter, t_env *env,
 		buf = readline(">> ");
 		if (!buf || str_compare(limiter->args[0], buf, sizeof_str(buf, '\n')))
 		{
-			free_ast_child(limiter);
+			free_ast(limiter->root);
 			free(buf);
 			break ;
 		}

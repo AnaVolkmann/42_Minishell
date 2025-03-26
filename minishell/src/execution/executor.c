@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:07:01 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 16:29:57 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:23:47 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ int	execute_ast_node(t_ast_node *head, int *pipe_data, t_env *env)
 
 	_fd[0] = -1;
 	_fd[1] = -1;
-	set_parent(head);
 	if (head->file_type == FILE_READY)
 	{
 		if (head->type == T_PIPE)

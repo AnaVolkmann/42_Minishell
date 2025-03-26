@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:45:59 by lufiguei          #+#    #+#             */
-/*   Updated: 2025/03/25 16:29:25 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:25:37 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,52 +65,38 @@ char	*handle_edge(char **cmd, t_env *env, int *_out_fd)
 	return (new_path);
 }
 
-void	free_ast_child(t_ast_node *node)
-{
-	int	i;
-
-	i = 0;
-	if (!node)
-		return ;
-	while (node->parent != NULL)
-		node = node->parent;
-	if (node->type == T_WORD && node->args)
-	{
-		while (node->args && node->args[i])
-		{
-			free(node->args[i]);
-			i++;
-		}
-		free(node->args);
-	}
-	free_ast(node->left);
-	free_ast(node->right);
-	free(node);
-}
-
-void	set_parent(t_ast_node *head)
-{
-	if (!head)
-		return ;
-	if (head->left)
-		head->left->parent = head;
-	if (head->right)
-		head->right->parent = head;
-}
-
 void	exec_error(t_ast_node *head, t_env *env, int flag)
 {
 	if (flag == 0)
 	{
 		free_string_array(head->cmd);
-		free_ast_child(head);
+		free_ast(head->root);
 		cleanup_and_exit_shell(env, 0);
 	}
 	else
 	{
 		ft_putendl_fd("Command not found.", 2);
 		free_string_array(head->cmd);
-		free_ast_child(head);
+		free_ast(head->root);
 		cleanup_and_exit_shell(env, 127);
 	}
 }
+
+void set_root(t_ast_node *head)
+{
+	if (!head)
+		return;
+
+	if (!head->root) {
+		head->root = head;
+	}
+	if (head->left) {
+		head->left->root = head->root;
+		set_root(head->left);
+	}
+	if (head->right) {
+	head->right->root = head->root;
+	set_root(head->right);
+	}
+}
+

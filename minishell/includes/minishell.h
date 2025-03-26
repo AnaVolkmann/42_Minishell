@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:03:36 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 15:46:10 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:24:38 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_ast_node
 	char				**cmd;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
-	struct s_ast_node	*parent;
+	struct s_ast_node	*root;
 }	t_ast_node;
 
 /**************************envp*********************/
@@ -259,8 +259,7 @@ void		set_old_pwd_in_env(char *old, t_env *env);
 char		*get_env_value(t_env *env, char *key);
 char		*handle_edge(char **cmd, t_env *env, int *_out_fd);
 void		unset_helper(char **cmd, t_env *env, int *s);
-void		free_ast_child(t_ast_node *node);
-void		set_parent(t_ast_node *head);
 void		exec_error(t_ast_node *head, t_env *env, int flag);
+void		set_root(t_ast_node *head);
 
 #endif

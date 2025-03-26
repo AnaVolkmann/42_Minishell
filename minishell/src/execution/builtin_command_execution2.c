@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_command_execution2.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ana-lda- <ana-lda-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 18:24:10 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 12:10:10 by ana-lda-         ###   ########.fr       */
+/*   Updated: 2025/03/26 10:50:15 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,6 @@ void	exec_builtin_and_exit(t_ast_node *head,
 
 	status = execute_builtin_command_in_child(
 			head, env, _out_fd, pipe_data);
-	free_ast_child(head);
+	free_ast(head->root);
 	cleanup_and_exit_shell(env, status);
 }

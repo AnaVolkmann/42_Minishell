@@ -6,7 +6,7 @@
 /*   By: lufiguei <lufiguei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 19:11:48 by ana-lda-          #+#    #+#             */
-/*   Updated: 2025/03/25 12:18:37 by lufiguei         ###   ########.fr       */
+/*   Updated: 2025/03/26 11:25:00 by lufiguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_exit(char **_cmd_, t_env *env, t_ast_node *head)
 	}
 	else if (_cmd_[1])
 		status = (ft_atoi(_cmd_[1]) % 256);
-	free_ast_child(head);
+	free_ast(head->root);
 	cleanup_and_exit_shell(env, status);
 }
 
