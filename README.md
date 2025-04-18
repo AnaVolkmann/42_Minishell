@@ -1,4 +1,22 @@
-# Minishell
+<div align=center>
+	<h1>
+		<i>Minishell</i>
+	</h1>
+	<img src=https://github.com/AnaVolkmann/42_project_badges/blob/main/badges/minishelle.png alt=minishell_badge/>
+	<p align=center>
+        <p align="center">
+	<b><i>As beautifull as a shell</i></b><br>
+  
+---
+
+<h2>
+		Final score
+	</h2>
+	<img src=https://github.com/AnaVolkmann/AnaVolkmann/blob/main/minishell_score.png alt=minishell_grade/>
+
+---
+
+</div>
 
 ### Team Members
 
