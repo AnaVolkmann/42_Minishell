@@ -29,6 +29,13 @@ Minishell is a simple shell program built in C, inspired by [Bash](https://en.wi
 
 Minishell pushes you to think critically and creatively, offering practical challenges like building parsers, managing redirection, and implementing signals, while also helping you to develop strong teamwork skills.
 
+> [!NOTE]  
+> In accordance with the 42 School coding norms:  
+> * Each function must not exceed 25 lines of code.  
+> * Every variable should be declared at the top of the function and initialized on a separate line.  
+> * Only allowed functions may be used—using others is considered cheating.
+
+
 ## Project Challenges
 
 We faced many challenges while building Minishell, including:
