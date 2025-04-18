@@ -127,6 +127,8 @@ The process of tokenization involves breaking the input into meaningful units (t
 
 After tokenization, the input is parsed into an AST that reflects the execution flow of the commands, handling redirection, pipes, and environment variable expansions.
 
+<img src=https://github.com/AnaVolkmann/AnaVolkmann/blob/main/AST_demo.png alt=minishell_astdemo/>
+
 ### Error Checking
 
 Our syntax error checker identifies unclosed quotes, misplaced operators (like consecutive pipes), and invalid redirections, ensuring the shell correctly handles invalid input.
